@@ -1,8 +1,9 @@
-// src/TransactionsPage.js
+import { useAddTransaction } from './hooks/useAddTransaction';
 import React, { useState } from 'react';
 import './TransactionsPage.css';
 
 const TransactionsPage = () => {
+  const { addTransaction } = useAddTransaction();
   const [searchTerm, setSearchTerm] = useState('');
   const [transactions, setTransactions] = useState([
     { date: '2024-06-01', amount: 100, category: 'Withdrawal' },
@@ -10,8 +11,31 @@ const TransactionsPage = () => {
     { date: '2024-06-03', amount: 200, category: 'Till to till' },
   ]);
 
+  const [formData, setFormData] = useState({
+    amount: '',
+    category: ''
+  });
+
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
+  };
+
+  const handleFormChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleAddTransaction = async () => {
+    await addTransaction(formData);
+    // Assuming addTransaction updates the transactions list in Firestore,
+    // you can update the local state after adding the transaction.
+    setTransactions([...transactions, formData]);
+    setFormData({
+      amount: '',
+      category: ''
+    });
   };
 
   const filteredTransactions = transactions.filter((transaction) =>
@@ -48,8 +72,21 @@ const TransactionsPage = () => {
         </tbody>
       </table>
       <div className="button-group">
-        <button onClick={() => alert('Add Transaction clicked')}>Add Transaction</button>
         <button onClick={() => alert('Upload File clicked')}>Upload File</button>
+      </div>
+      <div className="add-transaction-form">
+        <h3>Add Transaction</h3>
+        <form>
+          <label>
+            Amount:
+            <input type="number" name="amount" value={formData.amount} onChange={handleFormChange} />
+          </label>
+          <label>
+            Category:
+            <input type="text" name="category" value={formData.category} onChange={handleFormChange} />
+          </label>
+          <button type="button" onClick={handleAddTransaction}>Add Transaction</button>
+        </form>
       </div>
     </div>
   );
