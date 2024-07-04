@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './config/firebase-config';
+import SignInwithGoogle from './SignInwithGoogle';
 
 
 function Login() {
@@ -43,6 +44,7 @@ function Login() {
            required />
         </div>
         <button type="submit">Login</button>
+        <SignInwithGoogle/>
       </form>
       <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
     </div>
