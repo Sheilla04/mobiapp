@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.continue-p{
+  color: azure;
+  font-size: 12px;
+  text-align: center;
+}
