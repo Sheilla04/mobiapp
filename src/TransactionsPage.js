@@ -1,26 +1,48 @@
+import React, { useState, useEffect } from 'react';
 import { useAddTransaction } from './hooks/useAddTransaction';
-import React, { useState } from 'react';
-import './TransactionsPage.css';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import { collection, query,where, getDocs, Timestamp } from 'firebase/firestore';
+import { db } from './config/firebase-config';
+import { useGetUserInfo } from './hooks/useGetUserInfo';
 
 const TransactionsPage = () => {
   const { addTransaction } = useAddTransaction();
+  const userInfo = useGetUserInfo();
   const [searchTerm, setSearchTerm] = useState('');
-  const [transactions, setTransactions] = useState([
-    { date: '2024-06-01', amount: 100, category: 'Withdrawal' },
-    { date: '2024-06-02', amount: 50, category: 'Customer to till' },
-    { date: '2024-06-03', amount: 200, category: 'Till to till' },
-  ]);
-
+  const [transactions, setTransactions] = useState([]);
   const [formData, setFormData] = useState({
     amount: '',
     category: ''
   });
+
+  useEffect(() => {
+    const fetchTransactions = async () => {
+
+      if(!userInfo) return;
+
+
+      const transactionsCollectionRef = collection(db, 'transactions');
+      const q = query(transactionsCollectionRef, where("uid", "==", userInfo));
+      const transactionsSnapshot = await getDocs(q);
+      const fetchedTransactions = transactionsSnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+        date: doc.data().date ? doc.data().date.toDate() : null
+      }));
+      setTransactions(fetchedTransactions);
+    };
+  
+    fetchTransactions();
+  }, [userInfo]);
+
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
   const handleFormChange = (e) => {
+    if (!userInfo) return;
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -28,19 +50,36 @@ const TransactionsPage = () => {
   };
 
   const handleAddTransaction = async () => {
-    await addTransaction(formData);
-    // Assuming addTransaction updates the transactions list in Firestore,
-    // you can update the local state after adding the transaction.
-    setTransactions([...transactions, formData]);
+    const timestamp = Timestamp.fromDate(new Date()); // Get current Firestore Timestamp
+    await addTransaction(userInfo, { ...formData, date: timestamp });
+    setTransactions([...transactions, { ...formData, date: new Date() }]); // Update local state with dummy data
     setFormData({
       amount: '',
       category: ''
     });
+    handleClose();
   };
 
-  const filteredTransactions = transactions.filter((transaction) =>
-    transaction.category.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Modal state and handlers
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const formatDate = (date) => {
+    if (date instanceof Date) {
+      return date.toLocaleDateString();
+    } else {
+      return "Invalid Date";
+    }
+  };
+
+  const filteredTransactions = transactions.filter((transaction) => {
+    if (transaction.category) {
+      return transaction.category.toLowerCase().includes(searchTerm.toLowerCase());
+    }
+    return false; // or handle the case where category is undefined/null as needed
+  });
+  
 
   return (
     <div className="transactions-page">
@@ -64,7 +103,7 @@ const TransactionsPage = () => {
         <tbody>
           {filteredTransactions.map((transaction, index) => (
             <tr key={index}>
-              <td>{transaction.date}</td>
+              <td>{formatDate(transaction.date)}</td>
               <td>{transaction.amount}</td>
               <td>{transaction.category}</td>
             </tr>
@@ -72,22 +111,51 @@ const TransactionsPage = () => {
         </tbody>
       </table>
       <div className="button-group">
-        <button onClick={() => alert('Upload File clicked')}>Upload File</button>
+        <button onClick={handleShow}>Add Transaction</button>
       </div>
-      <div className="add-transaction-form">
-        <h3>Add Transaction</h3>
-        <form>
-          <label>
-            Amount:
-            <input type="number" name="amount" value={formData.amount} onChange={handleFormChange} />
-          </label>
-          <label>
-            Category:
-            <input type="text" name="category" value={formData.category} onChange={handleFormChange} />
-          </label>
-          <button type="button" onClick={handleAddTransaction}>Add Transaction</button>
-        </form>
-      </div>
+      
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Transaction</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form>
+            <div className="form-group">
+              <label htmlFor="amount">Amount:</label>
+              <input
+                type="number"
+                className="form-control"
+                id="amount"
+                name="amount"
+                value={formData.amount}
+                onChange={handleFormChange}
+                placeholder="Enter amount"
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="category">Category:</label>
+              <input
+                type="text"
+                className="form-control"
+                id="category"
+                name="category"
+                value={formData.category}
+                onChange={handleFormChange}
+                placeholder="Enter category"
+              />
+            </div>
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleAddTransaction}>
+            Add Transaction
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
     </div>
   );
 };
