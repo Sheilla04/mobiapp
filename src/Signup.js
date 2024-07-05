@@ -6,7 +6,7 @@ import { auth, db } from './config/firebase-config';
 //import { Database, getDatabase } from "firebase/database";
 import { doc, setDoc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
-
+import SignInwithGoogle from './SignInwithGoogle';
 
 function Signup() {
   const [email, setEmail] = useState('');
@@ -70,6 +70,7 @@ function Signup() {
           />
         </div>
         <button type="submit">Sign Up</button>
+        <SignInwithGoogle/>
       </form>
       <p>
         Already have an account? <Link to="/login">Login</Link>
@@ -79,6 +80,9 @@ function Signup() {
 }
 
 export default Signup;
+
+
+
 
 
 
