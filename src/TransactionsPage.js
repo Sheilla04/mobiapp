@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useAddTransaction } from './hooks/useAddTransaction';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { collection, query,where, getDocs, Timestamp } from 'firebase/firestore';
+import Form from 'react-bootstrap/Form'; // Add Form component import
+import { collection, query, where, getDocs, Timestamp } from 'firebase/firestore';
 import { db } from './config/firebase-config';
 import { useGetUserInfo } from './hooks/useGetUserInfo';
 
@@ -18,9 +19,7 @@ const TransactionsPage = () => {
 
   useEffect(() => {
     const fetchTransactions = async () => {
-
-      if(!userInfo) return;
-
+      if (!userInfo) return;
 
       const transactionsCollectionRef = collection(db, 'transactions');
       const q = query(transactionsCollectionRef, where("uid", "==", userInfo));
@@ -32,10 +31,9 @@ const TransactionsPage = () => {
       }));
       setTransactions(fetchedTransactions);
     };
-  
+
     fetchTransactions();
   }, [userInfo]);
-
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -52,7 +50,7 @@ const TransactionsPage = () => {
   const handleAddTransaction = async () => {
     const timestamp = Timestamp.fromDate(new Date()); // Get current Firestore Timestamp
     await addTransaction(userInfo, { ...formData, date: timestamp });
-    setTransactions([...transactions, { ...formData, date: new Date() }]); // Update local state with dummy data
+    setTransactions([...transactions, { ...formData, date: new Date() }]);
     setFormData({
       amount: '',
       category: ''
@@ -77,9 +75,8 @@ const TransactionsPage = () => {
     if (transaction.category) {
       return transaction.category.toLowerCase().includes(searchTerm.toLowerCase());
     }
-    return false; // or handle the case where category is undefined/null as needed
+    return false;
   });
-  
 
   return (
     <div className="transactions-page">
@@ -134,15 +131,18 @@ const TransactionsPage = () => {
             </div>
             <div className="form-group">
               <label htmlFor="category">Category:</label>
-              <input
-                type="text"
-                className="form-control"
+              <Form.Select
+                aria-label="Default select example"
                 id="category"
                 name="category"
                 value={formData.category}
                 onChange={handleFormChange}
-                placeholder="Enter category"
-              />
+              >
+                <option>Select Type of Transaction</option>
+                <option value="1">Withdrawal</option>
+                <option value="2">Payment</option>
+                <option value="3">Three</option>
+              </Form.Select>
             </div>
           </form>
         </Modal.Body>
@@ -155,7 +155,6 @@ const TransactionsPage = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-
     </div>
   );
 };

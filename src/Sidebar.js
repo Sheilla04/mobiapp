@@ -11,10 +11,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
-      <div className="hamburger-menu" onClick={toggleSidebar}>
-        ☰
-      </div>
+    <div className="sidebar">
       <div className="header">
         <img src={logo} alt="Logo" className="logo" />
         <h2>Mobi-Budget</h2>
