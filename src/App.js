@@ -1,6 +1,8 @@
 // src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify'; // Import ToastContainer
+import 'react-toastify/dist/ReactToastify.css'; // Import CSS for toast notifications
 import TopNavBar from './TopNavBar';
 import Login from './Login';
 import Signup from './Signup';
@@ -15,7 +17,7 @@ import './Dashboard.css'; // Import the Dashboard CSS
 import './TransactionsPage.css'; // Import the TransactionsPage CSS
 import './ResourcesPage.css'; // Import the ResourcesPage CSS
 import './UserProfile.css'; // Import the UserProfile CSS
-import './Settings.css';// Import the Settings.css
+import './Settings.css'; // Import the Settings.css
 import './Sidebar.css'; // Import the Sidebar.css
 
 const Layout = ({ children }) => {
@@ -35,6 +37,7 @@ const Layout = ({ children }) => {
 function App() {
   return (
     <Router>
+      <ToastContainer /> {/* Render ToastContainer once */}
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
@@ -50,5 +53,3 @@ function App() {
 }
 
 export default App;
-
-
