@@ -1,41 +1,35 @@
+// src/Signup.js
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
-import './Signup.css'; // Import the CSS file
+import { Link, useNavigate } from 'react-router-dom';
+import './Signup.css';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from './config/firebase-config';
-//import { Database, getDatabase } from "firebase/database";
 import { doc, setDoc } from 'firebase/firestore';
-import { toast } from 'react-toastify';
+import { toast } from 'react-toastify'; // Import toast
+import 'react-toastify/dist/ReactToastify.css'; // Import CSS for toast notifications
 import SignInwithGoogle from './SignInwithGoogle';
 
 function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       const user = auth.currentUser;
-      console.log(user);
-      if(user) {
-        await setDoc(doc(db,"Users", user.uid), {
-          email:user.email,
-          name:name,
+      if (user) {
+        await setDoc(doc(db, "Users", user.uid), {
+          email: user.email,
+          name: name,
         });
       }
-      console.log('User has been registered successfully!');
-      toast.success("User has been registered successfully!!", 
-        {position : 'top-center',
-      });
-      navigate('/login'); // Redirect to login page
+      toast.success("User has been registered successfully!", { position: 'top-center' });
+      navigate('/login');
     } catch (error) {
-      console.log(error.message);
-      toast.success(error.message, 
-        {position : 'bottom-center',
-      });
+      toast.error(error.message, { position: 'bottom-center' });
     }
   };
 
@@ -70,7 +64,7 @@ function Signup() {
           />
         </div>
         <button type="submit">Sign Up</button>
-        <SignInwithGoogle/>
+        <SignInwithGoogle />
       </form>
       <p>
         Already have an account? <Link to="/login">Login</Link>
@@ -80,9 +74,3 @@ function Signup() {
 }
 
 export default Signup;
-
-
-
-
-
-
