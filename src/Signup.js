@@ -24,6 +24,7 @@ function Signup() {
         await setDoc(doc(db,"Users", user.uid), {
           email:user.email,
           name:name,
+          photo:"",
         });
       }
       console.log('User has been registered successfully!');

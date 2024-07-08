@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 
 function UserProfile() {
     const [userDetails, setUserDetails] = useState(null);
-
     const fetchUserData = async () => {
         auth.onAuthStateChanged(async (user) => {
             if (user) {
@@ -32,13 +31,22 @@ function UserProfile() {
         fetchUserData();
     }, []);
 
+    async function handleLogout() {
+        try{
+         await auth.signOut();
+         window.location.href = './login';
+         console.log("User logged out succesfully!");
+        }catch(error){
+            console.error("Error logging out:", error.message);
+        }
+    }
     return (
         <div>
             {userDetails ? (
                 <>
                     <div className="user-profile">
                         <div className="profile-header">
-                            <img src={userDetails.profilePicture || "https://via.placeholder.com/150"} alt="Profile" className="profile-img" />
+                            <img src={userDetails.photo || "https://via.placeholder.com/150"} alt="Profile" className="profile-img" />
                             <div className="profile-info">
                                 <h2>{userDetails.name}</h2>
                                 <p>Email: {userDetails.email}</p>
@@ -61,7 +69,7 @@ function UserProfile() {
                                 <h3>Settings</h3>
                                 <button>Edit Profile</button>
                                 <button>Change Password</button>
-                                <button>Logout</button>
+                                <button onClick={handleLogout}>Logout</button>
                             </div>
                         </div>
                     </div>
