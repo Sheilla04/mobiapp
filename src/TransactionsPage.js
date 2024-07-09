@@ -12,7 +12,8 @@ import { useGetUserInfo } from './hooks/useGetUserInfo';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { formatDistanceToNow } from 'date-fns';
-
+import Swal from 'sweetalert2'; // Import SweetAlert2
+import './TransactionsPage.css';
 const TransactionsPage = () => {
   const { addTransaction } = useAddTransaction();
   const {
@@ -71,15 +72,48 @@ const TransactionsPage = () => {
     }
   };
 
+  const validateForm = (data) => {
+    if (!data.amount || !data.category) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Validation Error',
+        text: 'Please fill in all fields before submitting.',
+      });
+      return false;
+    }
+    return true;
+  };
+
   const handleAddTransaction = async () => {
-    const timestamp = Timestamp.fromDate(new Date());
-    await addTransaction(userInfo, { ...formData, date: timestamp });
-    setTransactions([...transactions, { ...formData, date: new Date() }]);
-    setFormData({
-      amount: '',
-      category: '',
+    if (!validateForm(formData)) return;
+    Swal.fire({
+      title: 'Adding transaction...',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
     });
-    handleClose();
+
+    try {
+      const timestamp = Timestamp.fromDate(new Date());
+      await addTransaction(userInfo, { ...formData, date: timestamp });
+      setTransactions([...transactions, { ...formData, date: new Date() }]);
+      setFormData({
+        amount: '',
+        category: '',
+      });
+      handleClose();
+      Swal.fire({
+        icon: 'success',
+        title: 'Transaction added successfully!',
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Failed to add transaction. Please try again.',
+      });
+    }
   };
 
   const handleDelete = async (transactionId) => {
@@ -88,6 +122,15 @@ const TransactionsPage = () => {
   };
 
   const handleUpdateTransaction = async (updatedData) => {
+    if (!validateForm(updatedData)) return;
+    Swal.fire({
+      title: 'Updating transaction...',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
     const { id, ...restData } = updatedData; // Destructure id and other fields from updatedData
     const transactionDocRef = doc(db, 'transactions', id);
 
@@ -98,8 +141,17 @@ const TransactionsPage = () => {
       );
       setTransactions(updatedTransactions);
       handleClose();
+      Swal.fire({
+        icon: 'success',
+        title: 'Transaction updated successfully!',
+      });
     } catch (error) {
       console.error('Error updating transaction:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Failed to update transaction. Please try again.',
+      });
     }
   };
 
