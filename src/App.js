@@ -20,6 +20,7 @@ import './UserProfile.css'; // Import the UserProfile CSS
 import './Settings.css'; // Import the Settings.css
 import './Sidebar.css'; // Import the Sidebar.css
 
+
 const Layout = ({ children }) => {
   const location = useLocation();
   const showNavbar = location.pathname !== '/login' && location.pathname !== '/signup';

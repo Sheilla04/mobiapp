@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import UploadPDF from './UploadFile';
 import { useAddTransaction } from './hooks/useAddTransaction';
 import useEditTransaction from './hooks/useEditTransaction'; // Import useEditTransaction
 import { useDeleteTransaction } from './hooks/useDeleteTransaction';
@@ -117,6 +118,7 @@ const TransactionsPage = () => {
   return (
     <div className="transactions-page">
       <h2>Transactions</h2>
+      <UploadPDF/>
       <div className="controls">
         <input
           type="text"
