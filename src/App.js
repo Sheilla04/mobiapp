@@ -38,7 +38,7 @@ const Layout = ({ children }) => {
 function App() {
   return (
     <Router>
-      <ToastContainer /> {/* Render Toast,tContainer once */}
+      <ToastContainer /> {/* Render ToastContainer once */}
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />

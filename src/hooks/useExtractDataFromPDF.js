@@ -6,7 +6,7 @@ import { db } from '../config/firebase-config';
 
 export const useExtractDataFromPDF = () => {
   const extractDataFromPDF = useCallback(async (file) => {
-    try { 
+    try {
       console.log('Extracting data from PDF:', file.name);
       const arrayBuffer = await file.arrayBuffer();
       const pdf = await getDocument({ data: arrayBuffer }).promise;
