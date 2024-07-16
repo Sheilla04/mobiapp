@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import UploadPDF from './UploadFile';
 import { useAddTransaction } from './hooks/useAddTransaction';
 import useEditTransaction from './hooks/useEditTransaction'; // Import useEditTransaction
 import { useDeleteTransaction } from './hooks/useDeleteTransaction';
@@ -11,17 +12,19 @@ import { useGetUserInfo } from './hooks/useGetUserInfo';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { formatDistanceToNow } from 'date-fns';
+import Swal from 'sweetalert2';
+import './TransactionsPage.css';
 
 const TransactionsPage = () => {
   const { addTransaction } = useAddTransaction();
   const {
     show,
     editData,
-    setEditData, // Destructure setEditData from useEditTransaction hook
+    setEditData,
     handleEditTransaction,
     handleClose,
     handleShow,
-  } = useEditTransaction(); // Call useEditTransaction hook
+  } = useEditTransaction();
 
   const { handleDeleteTransaction } = useDeleteTransaction();
   const userInfo = useGetUserInfo();
@@ -29,6 +32,7 @@ const TransactionsPage = () => {
   const [transactions, setTransactions] = useState([]);
   const [formData, setFormData] = useState({
     amount: '',
+    transactionType: '',
     category: '',
   });
 
@@ -70,15 +74,71 @@ const TransactionsPage = () => {
     }
   };
 
+  const validateForm = (data) => {
+    if (!data.amount || !data.transactionType || !data.category) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Validation Error',
+        text: 'Please fill in all fields before submitting.',
+      });
+      return false;
+    }
+    return true;
+  };
+
+  const calculateCost = (amount, transactionType, category) => {
+    amount = parseFloat(amount);
+    if (transactionType === 'Receiving') {
+      if (category === 'Till customer payment' && amount > 200) {
+        return amount * 0.0055;
+      }
+      return receivingCostTable[category]?.find(([min, max, cost]) => amount >= min && amount <= max)?.[2] || 0;
+    } else if (transactionType === 'Sending') {
+      if (category === 'Till to till payment') {
+        return Math.min(amount * 0.0025, 200);
+      }
+      return sendingCostTable[category]?.find(([min, max, cost]) => amount >= min && amount <= max)?.[2] || 0;
+    } else if (transactionType === 'Withdrawal') {
+      return withdrawalCostTable[category]?.find(([min, max, cost]) => amount >= min && amount <= max)?.[2] || 0;
+    }
+    return 0;
+  };
+
   const handleAddTransaction = async () => {
-    const timestamp = Timestamp.fromDate(new Date());
-    await addTransaction(userInfo, { ...formData, date: timestamp });
-    setTransactions([...transactions, { ...formData, date: new Date() }]);
-    setFormData({
-      amount: '',
-      category: '',
+    if (!validateForm(formData)) return;
+
+    const { amount, transactionType, category } = formData;
+    const cost = calculateCost(amount, transactionType, category);
+
+    Swal.fire({
+      title: 'Adding transaction...',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
     });
-    handleClose();
+
+    try {
+      const timestamp = Timestamp.fromDate(new Date());
+      await addTransaction(userInfo, { ...formData, date: timestamp, cost });
+      setTransactions([...transactions, { ...formData, date: new Date(), cost }]);
+      setFormData({
+        amount: '',
+        transactionType: '',
+        category: '',
+      });
+      handleClose();
+      Swal.fire({
+        icon: 'success',
+        title: 'Transaction added successfully!',
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Failed to add transaction. Please try again.',
+      });
+    }
   };
 
   const handleDelete = async (transactionId) => {
@@ -87,23 +147,45 @@ const TransactionsPage = () => {
   };
 
   const handleUpdateTransaction = async (updatedData) => {
-    const { id, ...restData } = updatedData; // Destructure id and other fields from updatedData
+    if (!validateForm(updatedData)) return;
+
+    const { amount, transactionType, category } = updatedData;
+    updatedData.cost = calculateCost(amount, transactionType, category);
+
+    Swal.fire({
+      title: 'Updating transaction...',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
+    const { id, ...restData } = updatedData;
     const transactionDocRef = doc(db, 'transactions', id);
 
     try {
-      await updateDoc(transactionDocRef, restData); // Update document with restData (amount, category, etc.)
+      await updateDoc(transactionDocRef, restData);
       const updatedTransactions = transactions.map(transaction =>
         transaction.id === id ? { ...transaction, ...restData } : transaction
       );
       setTransactions(updatedTransactions);
       handleClose();
+      Swal.fire({
+        icon: 'success',
+        title: 'Transaction updated successfully!',
+      });
     } catch (error) {
       console.error('Error updating transaction:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Failed to update transaction. Please try again.',
+      });
     }
   };
 
   const getTimeAgo = (date) => {
-    if (!date) return ''; // Handle case where date is null or undefined
+    if (!date) return '';
     return formatDistanceToNow(new Date(date), { addSuffix: true });
   };
 
@@ -114,9 +196,16 @@ const TransactionsPage = () => {
     return false;
   });
 
+  const transactionOptions = {
+    Receiving: ['Till customer payment', 'Paybill(Mgao Tariff)', 'Paybill (Bouquet tariff)'],
+    Sending: ['Till to till payment', 'Till to number payment', 'B2C(Registered users)', 'B2C(Unregistered users)'],
+    Withdrawal: ['Normal', 'B2C charges'],
+  };
+
   return (
     <div className="transactions-page">
       <h2>Transactions</h2>
+      <UploadPDF />
       <div className="controls">
         <input
           type="text"
@@ -130,7 +219,9 @@ const TransactionsPage = () => {
           <tr>
             <th>Date</th>
             <th>Amount</th>
+            <th>Transaction Type</th>
             <th>Category</th>
+            <th>Cost</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -139,7 +230,9 @@ const TransactionsPage = () => {
             <tr key={index}>
               <td>{getTimeAgo(transaction.date)}</td>
               <td>{transaction.amount}</td>
+              <td>{transaction.transactionType}</td>
               <td>{transaction.category}</td>
+              <td>{transaction.cost}</td>
               <td>
                 <FontAwesomeIcon
                   icon={faEdit}
@@ -179,6 +272,21 @@ const TransactionsPage = () => {
               />
             </div>
             <div className="form-group">
+              <label htmlFor="transactionType">Transaction Type:</label>
+              <Form.Select
+                aria-label="Default select example"
+                id="transactionType"
+                name="transactionType"
+                value={editData ? editData.transactionType : formData.transactionType}
+                onChange={handleFormChange}
+              >
+                <option>Select Type of Transaction</option>
+                <option value="Receiving">Receiving</option>
+                <option value="Sending">Sending</option>
+                <option value="Withdrawal">Withdrawal</option>
+              </Form.Select>
+            </div>
+            <div className="form-group">
               <label htmlFor="category">Category:</label>
               <Form.Select
                 aria-label="Default select example"
@@ -186,11 +294,12 @@ const TransactionsPage = () => {
                 name="category"
                 value={editData ? editData.category : formData.category}
                 onChange={handleFormChange}
+                disabled={!formData.transactionType}
               >
-                <option>Select Type of Transaction</option>
-                <option value="Withdrawal">Withdrawal</option>
-                <option value="Payment">Payment</option>
-                <option value="Transfer">Transfer</option>
+                <option>Select Category</option>
+                {formData.transactionType && transactionOptions[formData.transactionType].map((option, index) => (
+                  <option key={index} value={option}>{option}</option>
+                ))}
               </Form.Select>
             </div>
           </form>
@@ -214,4 +323,118 @@ const TransactionsPage = () => {
   );
 };
 
+const receivingCostTable = {
+  'Paybill(Mgao Tariff)': [
+    [0, 1000, 0],
+    [1001, 1500, 5],
+    [1501, 2500, 7],
+    [2501, 3500, 9],
+    [3501, 5000, 18],
+    [5001, 7500, 25],
+    [7501, 10000, 30],
+    [10001, 15000, 39],
+    [15001, 20000, 43],
+    [20001, 25000, 47],
+    [25001, 30000, 52],
+    [30001, 35000, 62],
+    [35001, 40000, 76],
+    [40001, 45000, 80],
+    [45001, 250000, 84],
+  ],
+  'Paybill (Bouquet tariff)': [
+    [0, 100, 0],
+    [101, 500, 5],
+    [501, 1000, 10],
+    [1001, 1500, 15],
+    [1501, 2500, 20],
+    [2501, 3500, 25],
+    [3501, 5000, 34],
+    [5001, 7500, 42],
+    [7501, 10000, 48],
+    [10001, 15000, 57],
+    [15001, 20000, 62],
+    [20001, 25000, 67],
+    [25001, 30000, 72],
+    [30001, 35000, 83],
+    [35001, 40000, 99],
+    [40001, 45000, 103],
+    [45001, 250000, 108],
+  ],
+};
+
+const sendingCostTable = {
+  'Till to number payment': [
+    [0, 100, 0],
+    [101, 500, 7],
+    [501, 1000, 13],
+    [1001, 1500, 23],
+    [1501, 2500, 33],
+    [2501, 3500, 53],
+    [3501, 5000, 57],
+    [5001, 7500, 78],
+    [7501, 10000, 90],
+    [10001, 15000, 100],
+    [15001, 20000, 105],
+    [20001, 250000, 108],
+  ],
+  'B2C(Registered users)': [
+    [0, 100, 0],
+    [101, 1500, 5],
+    [1501, 5000, 9],
+    [5001, 20000, 11],
+    [20001, 250000, 13],
+  ],
+  'B2C(Unregistered users)': [
+    [101, 500, 8],
+    [501, 1500, 14],
+    [1501, 2500, 18],
+    [2501, 3500, 25],
+    [3501, 5000, 30],
+    [5001, 7500, 37],
+    [7501, 10000, 46],
+    [10001, 15000, 62],
+    [15001, 20000, 67],
+    [20001, 35000, 73],
+  ],
+};
+
+const withdrawalCostTable = {
+  'Normal': [
+    [0, 49, 0],
+    [50, 100, 11],
+    [101, 2500, 29],
+    [2501, 3500, 52],
+    [3501, 5000, 69],
+    [5001, 7500, 87],
+    [7501, 10000, 115],
+    [10001, 15000, 167],
+    [15001, 20000, 185],
+    [20001, 35000, 197],
+    [35001, 50000, 278],
+    [50001, 250000, 309],
+  ],
+  'B2C charges': [
+    [0, 49, 0],
+    [50, 100, 11],
+    [101, 1500, 34],
+    [1501, 2500, 38],
+    [2501, 3500, 61],
+    [3501, 5000, 78],
+    [5001, 7500, 98],
+    [7501, 10000, 126],
+    [10001, 15000, 178],
+    [15001, 20000, 196],
+    [20001, 35000, 210],
+    [35001, 50000, 291],
+    [50001, 250000, 322],
+  ],
+};
+
 export default TransactionsPage;
+
+
+
+
+
+
+

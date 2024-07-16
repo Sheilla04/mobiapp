@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './Sidebar.css';
 import logo from './assets/logo.png'; // Adjust the path as necessary
 
 const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  // const [isOpen, setIsOpen] = useState(true);
 
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
+  // const toggleSidebar = () => {
+  //   setIsOpen(!isOpen);
+  // };
 
   return (
     <div className="sidebar">
@@ -17,7 +17,7 @@ const Sidebar = () => {
         <h2>Mobi-Budget</h2>
       </div>
       <nav>
-        <ul className={isOpen ? 'visible' : 'hidden'}>
+        <ul >
           <li><NavLink to="/dashboard" activeClassName="active">Dashboard</NavLink></li>
           <li><NavLink to="/transactions" activeClassName="active">Transactions</NavLink></li>
           <li><NavLink to="/resources" activeClassName="active">Sources</NavLink></li>
@@ -30,4 +30,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-

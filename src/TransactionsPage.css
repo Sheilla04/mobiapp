@@ -54,5 +54,22 @@ table th {
 .button-group button:hover {
   background-color: #0056b3;
 }
+/* custom-alert.css */
+.custom-swal {
+  max-width: 300px !important; /* Adjust the width as needed */
+  padding: 10px !important; /* Adjust padding as needed */
+}
+
+.custom-swal .swal2-title {
+  font-size: 18px !important; /* Adjust title font size */
+}
+
+.custom-swal .swal2-content {
+  font-size: 14px !important; /* Adjust content font size */
+}
+
+.custom-swal .swal2-actions {
+  justify-content: center !important; /* Center the buttons */
+}
 
   
