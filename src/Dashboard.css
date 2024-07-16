@@ -1,7 +1,7 @@
 /* src/Dashboard.css */
 
 .dashboard {
-  padding: 20px;
+  padding-left:15vw;
 }
 
 .cards{
@@ -9,16 +9,28 @@
   justify-content: space-around;
   flex-wrap: wrap;
   margin-bottom: 20px;
+  padding-top: 28vw;
+  padding-left: 30px;
+  padding-right: 5vw;
 }
 
 .card {
   background-color: #fff;
-  padding: 20px;
+  padding-right: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 250px;
   margin: 10px;
   text-align: center;
+}
+
+.card h3{
+  font-size:medium;
+  font-weight: 100;
+}
+
+.card p{
+  font-size:2rem;
 }
 
 .charts {
@@ -66,4 +78,3 @@ table th, table td {
 table th {
   background-color: #f4f4f4;
 }
-
