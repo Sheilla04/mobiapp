@@ -64,8 +64,9 @@
 }
 
 .sidebar nav ul li a.active{
-  background-color:#654a4a;
+  background-color: #007bff;
 }
+
 .sidebar nav ul li a:hover {
   background-color: #7a7a7a;
 }
@@ -83,4 +84,16 @@
   width: 40px; /* Adjust the size as needed */
   height: auto;
   margin-right: 10px;
+}
+
+.sidebar {
+  position: fixed;
+  top: 56px; /* Adjust according to the height of your Navbar */
+  bottom: 0;
+  left: 0;
+  z-index: 1030;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #343a40;
+  color: #fff;
 }

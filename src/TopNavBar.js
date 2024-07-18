@@ -1,45 +1,42 @@
-// TopNavBar.js
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import 'bootstrap/js/dist/dropdown';
+import './navbar.css'
 
-const TopNavBar = () => {
-  const navBarStyle = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#ffebcd', // Light brown color to match the theme
-    padding: '10px 20px',
-    boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-    position: 'fixed',
-    width: '100%',
-    top: 0,
-    zIndex: 1000,
-  };
-
-  const navItemStyle = {
-    color: '#333', // Dark text color for contrast
-    textDecoration: 'none',
-    marginLeft: '20px',
-    fontSize: '16px',
-    fontWeight: 'bold',
-  };
-
+function TopNavBar() {
   return (
-    <nav style={navBarStyle}>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <img
-          src="logo.png" // Replace with your logo image path
-          alt="Logo"
-          style={{ height: '40px', marginRight: '20px' }}
-        />
-        <Link to="/" style={navItemStyle}>Dashboard</Link>
-        <Link to="/transactions" style={navItemStyle}>Transactions</Link>
-        <Link to="/sources" style={navItemStyle}>Sources</Link>
-        <Link to="/profile" style={navItemStyle}>Profile</Link>
+    <nav className="navbar navbar-expand-sm navbar-dark bg-white bg-transparent">
+      <i className="navbar-brand bi bi-justify-left fs-4"></i>
+      <button
+        className="navbar-toggler d-lg-none"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapsibleNavId"
+        aria-controls="collapsibleNavId"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      ></button>
+      <div className="collapse navbar-collapse" id="collapsibleNavId">
+        <ul className="navbar-nav ms-auto mt-2 mt-lg-0">
+          <li className="nav-item dropdown">
+            <button
+              className="nav-link dropdown-toggle btn btn-link"
+              id="dropdownId"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Mobibudget
+            </button>
+            <div className="dropdown-menu" aria-labelledby="dropdownId">
+              <button className="dropdown-item btn btn-link">Profile</button>
+              <button className="dropdown-item btn btn-link">Settings</button>
+              <button className="dropdown-item btn btn-link">Logout</button>
+            </div>
+          </li>
+        </ul>
       </div>
-      <Link to="/settings" style={navItemStyle}>Settings</Link>
     </nav>
   );
-};
+}
 
 export default TopNavBar;

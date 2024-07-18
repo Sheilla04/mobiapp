@@ -1,8 +1,9 @@
-/* src/ResourcesPage.css */
-
 .resources-page {
   padding: 20px;
   text-align: center;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
@@ -12,7 +13,6 @@ h2 {
 .cards-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* 2 columns */
-  grid-template-rows: repeat(2, auto); /* 2 rows */
   gap: 20px;
   justify-content: center;
 }
@@ -41,5 +41,3 @@ h2 {
 .card a:hover {
   text-decoration: underline;
 }
-
-  

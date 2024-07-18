@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import UploadPDF from './UploadFile';
 import { useAddTransaction } from './hooks/useAddTransaction';
-import useEditTransaction from './hooks/useEditTransaction'; // Import useEditTransaction
+import useEditTransaction from './hooks/useEditTransaction';
 import { useDeleteTransaction } from './hooks/useDeleteTransaction';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -142,8 +142,33 @@ const TransactionsPage = () => {
   };
 
   const handleDelete = async (transactionId) => {
-    await handleDeleteTransaction(transactionId);
-    setTransactions(transactions.filter((transaction) => transaction.id !== transactionId));
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await handleDeleteTransaction(transactionId);
+          setTransactions(transactions.filter((transaction) => transaction.id !== transactionId));
+          Swal.fire(
+            'Deleted!',
+            'Your transaction has been deleted.',
+            'success'
+          );
+        } catch (error) {
+          Swal.fire(
+            'Error!',
+            'Failed to delete transaction. Please try again.',
+            'error'
+          );
+        }
+      }
+    });
   };
 
   const handleUpdateTransaction = async (updatedData) => {
@@ -258,70 +283,70 @@ const TransactionsPage = () => {
           <Modal.Title>{editData ? 'Edit Transaction' : 'Add Transaction'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form>
-            <div className="form-group">
-              <label htmlFor="amount">Amount:</label>
-              <input
+          <Form>
+            <Form.Group>
+              <Form.Label>Amount</Form.Label>
+              <Form.Control
                 type="number"
-                className="form-control"
-                id="amount"
                 name="amount"
                 value={editData ? editData.amount : formData.amount}
                 onChange={handleFormChange}
-                placeholder="Enter amount"
               />
-            </div>
-            <div className="form-group">
-              <label htmlFor="transactionType">Transaction Type:</label>
-              <Form.Select
-                aria-label="Default select example"
-                id="transactionType"
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Transaction Type</Form.Label>
+              <Form.Control
+                as="select"
                 name="transactionType"
                 value={editData ? editData.transactionType : formData.transactionType}
                 onChange={handleFormChange}
               >
-                <option>Select Type of Transaction</option>
-                <option value="Receiving">Receiving</option>
-                <option value="Sending">Sending</option>
-                <option value="Withdrawal">Withdrawal</option>
-              </Form.Select>
-            </div>
-            <div className="form-group">
-              <label htmlFor="category">Category:</label>
-              <Form.Select
-                aria-label="Default select example"
-                id="category"
+                <option value="">Select Type</option>
+                {Object.keys(transactionOptions).map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Category</Form.Label>
+              <Form.Control
+                as="select"
                 name="category"
                 value={editData ? editData.category : formData.category}
                 onChange={handleFormChange}
-                disabled={!formData.transactionType}
               >
-                <option>Select Category</option>
-                {formData.transactionType && transactionOptions[formData.transactionType].map((option, index) => (
-                  <option key={index} value={option}>{option}</option>
-                ))}
-              </Form.Select>
-            </div>
-          </form>
+                <option value="">Select Category</option>
+                {(transactionOptions[editData ? editData.transactionType : formData.transactionType] || []).map(
+                  (option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  )
+                )}
+              </Form.Control>
+            </Form.Group>
+          </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          {editData ? (
-            <Button variant="primary" onClick={() => handleUpdateTransaction(editData)}>
-              Update Transaction
-            </Button>
-          ) : (
-            <Button variant="primary" onClick={handleAddTransaction}>
-              Add Transaction
-            </Button>
-          )}
+          <Button
+            variant="primary"
+            onClick={editData ? () => handleUpdateTransaction(editData) : handleAddTransaction}
+          >
+            {editData ? 'Update Transaction' : 'Add Transaction'}
+          </Button>
         </Modal.Footer>
       </Modal>
     </div>
   );
 };
+
+
+
 
 const receivingCostTable = {
   'Paybill(Mgao Tariff)': [
@@ -431,7 +456,6 @@ const withdrawalCostTable = {
 };
 
 export default TransactionsPage;
-
 
 
 
