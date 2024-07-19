@@ -11,18 +11,20 @@ const resources = [
 
 const ResourcesPage = () => {
   return (
-    <div className="resources-page">
-      <h2>Resources</h2>
-      <div className="cards-container">
-        {resources.map((resource, index) => (
-          <div className="card" key={index}>
-            <h3>{resource.title}</h3>
-            <p>{resource.description}</p>
-            <a href={resource.link}>Learn More</a>
-          </div>
-        ))}
+    <div className='resource-container' style={{ paddingTop: '20px' }}>
+      <div className="resources-page" >
+        <h2>Resources</h2>
+        <div className="cards-container">
+          {resources.map((resource, index) => (
+            <div className="card" key={index}>
+              <h3>{resource.title}</h3>
+              <p>{resource.description}</p>
+              <a href={resource.link}>Learn More</a>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </div>  
   );
 };
 

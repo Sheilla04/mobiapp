@@ -1,8 +1,15 @@
-.navbar {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    z-index: 1030;
-    background-color: #343a40;
+.navbar{
+position: fixed;
+  width: 80vw;
+  padding-left: 14vw;
+  top: 0;
+  z-index: 1001;
+  background-color: #ffffff;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+  .navbar button{
+    color:black
   }
-  
+

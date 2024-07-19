@@ -8,7 +8,7 @@ const Sidebar = () => {
     <div className="bg-white sidebar p-2">
       <div className="brand-container d-flex align-items-center mb-3">
         <img src={logo} alt="Logo" className="logo me-2" />
-        <span className="brand-name fs-4">Mobi-Budget</span>
+        <span className="brand-name fs-4" style={{ color: "black" }}>Mobi-Budget</span>
       </div>
       <hr className="text-dark" />
       <div className="list-group list-group-flush">

@@ -4,7 +4,8 @@ import './navbar.css'
 
 function TopNavBar() {
   return (
-    <nav className="navbar navbar-expand-sm navbar-dark bg-white bg-transparent">
+    <nav className="navbar navbar-expand-sm navbar-dark bg-purple">
+    
       <i className="navbar-brand bi bi-justify-left fs-4"></i>
       <button
         className="navbar-toggler d-lg-none"
@@ -28,9 +29,10 @@ function TopNavBar() {
               Mobibudget
             </button>
             <div className="dropdown-menu" aria-labelledby="dropdownId">
-              <button className="dropdown-item btn btn-link">Profile</button>
-              <button className="dropdown-item btn btn-link">Settings</button>
-              <button className="dropdown-item btn btn-link">Logout</button>
+              <button className="dropdown-item btn btn-link" style={{ color: 'blue' }}>Profile</button>
+              <button className="dropdown-item btn btn-link" style={{ color: 'black' }}>Settings</button>
+              <button className="dropdown-item btn btn-link" style={{ color: 'black' }}>Logout</button>
+              
             </div>
           </li>
         </ul>

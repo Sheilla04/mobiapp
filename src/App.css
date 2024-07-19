@@ -9,6 +9,7 @@ body {
 .app-container {
   display: flex;
   height: 100%;
+  width: 100vw;
 }
 
 .sidebar {
@@ -29,16 +30,16 @@ body {
   flex-grow: 1;
 }
 
-.navbar {
-  position: fixed;
+/* .navbar {
+  position: relative;
   width: calc(100% - 250px);
-  left: 250px;
+  padding-left: 15vw;
   top: 0;
   z-index: 1001;
   background-color: #fff;
   padding: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+} */
 
 body {
   background-color: #e9ecef;

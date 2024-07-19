@@ -53,13 +53,13 @@ const Dashboard = () => {
   };
 
   // Prepare data for the Doughnut chart
-  const categories = [...new Set(transactions.map(t => t.category))];
+  const transactionTypes = [...new Set(transactions.map(t => t.transactionType))];
   const doughnutData = {
-    labels: categories,
+    labels: transactionTypes,
     datasets: [
       {
-        label: 'Charges',
-        data: categories.map(category => transactions.filter(t => t.category === category).reduce((acc, curr) => acc + (curr.cost || 0), 0)),
+        label: 'Charges by Transaction Type',
+        data: transactionTypes.map(type => transactions.filter(t => t.transactionType === type).reduce((acc, curr) => acc + (curr.cost || 0), 0)),
         backgroundColor: ['rgb(255, 205, 86)', 'rgb(255, 99, 132)', 'rgb(153, 102, 255)', 'rgb(0, 0, 0)', 'rgb(54, 162, 235)'],
         hoverOffset: 4,
       },
@@ -67,6 +67,7 @@ const Dashboard = () => {
   };
 
   // Prepare data for the Bar chart
+  const categories = [...new Set(transactions.map(t => t.category))];
   const barData = {
     labels: categories,
     datasets: [
