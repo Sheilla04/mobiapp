@@ -13,6 +13,14 @@
   align-items: center;
 }
 
+.p-3 p{
+  color: #ffffff;
+}
+
+.fs-2{
+  color: #fff;
+}
+
 /*.navbar {
   position: fixed;
   width: calc(100% - 250px);

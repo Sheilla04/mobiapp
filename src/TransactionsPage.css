@@ -15,7 +15,6 @@
 .controls input {
   padding: 10px;
   width: 100%;
-  max-width: 300px;
   margin-right: 10px;
   margin-bottom: 20px;
 }
@@ -44,15 +43,17 @@ table th {
 
 .button-group button {
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #525e6c; 
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  max-width: 400px;
+  margin-right: 10vw;
 }
 
 .button-group button:hover {
-  background-color: #0056b3;
+  background-color: #4c98ea;
 }
 /* custom-alert.css */
 .custom-swal {

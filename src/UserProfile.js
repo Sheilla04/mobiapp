@@ -86,80 +86,81 @@ function UserProfile() {
         return <p>Loading user details...</p>;
     }
 
-    return (
-        <div>
-            <div className="user-profile">
-                <div className="profile-header">
-                    <img src={userDetails.photo || "https://via.placeholder.com/150"} alt="Profile" className="profile-img" />
-                    <div className="profile-info">
-                        <h2>{userDetails.name}</h2>
-                        <p>Email: {userDetails.email}</p>
-                    </div>
+   return (
+    <div style={{paddingTop: '35px'}}>
+        <div className="profile-info">
+            <h1>Hi, {userDetails.name}</h1>
+            {/* <p>Email: {userDetails.email}</p> */}
+        </div>
+        <div className="user-profile">
+            <div className="profile-header">
+                <img src={userDetails.photo || "https://via.placeholder.com/150"} alt="Profile" className="profile-img" />
+            </div>
+            <div className="profile-body">
+                <div className="profile-section">
+                    <h3>About Me</h3>
+                    <p>{userDetails.aboutMe || "No information provided."}</p>
                 </div>
-                <div className="profile-body">
-                    <div className="profile-section">
-                        <h3>About Me</h3>
-                        <p>{userDetails.aboutMe || "No information provided."}</p>
-                    </div>
-                    <div className="profile-section">
-                        <h3>Recent Activities</h3>
-                        <ul>
-                            {userDetails.recentActivities ? userDetails.recentActivities.map((activity, index) => (
-                                <li key={index}>{activity}</li>
-                            )) : <li>No recent activities.</li>}
-                        </ul>
-                    </div>
-                    <div className="profile-section">
-                        <h3>Settings</h3>
-                        <button onClick={handleEditToggle}>{isEditing ? "Cancel" : "Edit Profile"}</button>
-                        <button>Change Password</button>
-                        <button onClick={handleLogout}>Logout</button>
-                    </div>
-                    {isEditing && (
-                        <form onSubmit={handleFormSubmit}>
-                            <div>
-                                <label>Name:</label>
-                                <input
-                                    type="text"
-                                    name="name"
-                                    value={formValues.name}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div>
-                                <label>Email:</label>
-                                <input
-                                    type="email"
-                                    name="email"
-                                    value={formValues.email}
-                                    onChange={handleInputChange}
-                                    disabled
-                                />
-                            </div>
-                            <div>
-                                <label>Profile Picture URL:</label>
-                                <input
-                                    type="text"
-                                    name="photo"
-                                    value={formValues.photo}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div>
-                                <label>About Me:</label>
-                                <textarea
-                                    name="aboutMe"
-                                    value={formValues.aboutMe}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <button type="submit">Save Changes</button>
-                        </form>
-                    )}
+                <div className="profile-section">
+                    <h3>Recent Activities</h3>
+                    <ul>
+                        {userDetails.recentActivities ? userDetails.recentActivities.map((activity, index) => (
+                            <li key={index}>{activity}</li>
+                        )) : <li style={{backgroundColor: '#e7e1e1'}}>No recent activities.</li>}
+                    </ul>
                 </div>
+                <div className="profile-section">
+                    <h3>Settings</h3>
+                    <button onClick={handleEditToggle}>{isEditing ? "Cancel" : "Edit Profile"}</button>
+                    <button>Change Password</button>
+                    <button onClick={handleLogout}>Logout</button>
+                </div>
+                {isEditing && (
+                    <form onSubmit={handleFormSubmit}>
+                        <div>
+                            <label>Name:</label>
+                            <input
+                                type="text"
+                                name="name"
+                                value={formValues.name}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div>
+                            <label>Email:</label>
+                            <input
+                                type="email"
+                                name="email"
+                                value={formValues.email}
+                                onChange={handleInputChange}
+                                disabled
+                            />
+                        </div>
+                        <div>
+                            <label>Profile Picture URL:</label>
+                            <input
+                                type="text"
+                                name="photo"
+                                value={formValues.photo}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div>
+                            <label>About Me:</label>
+                            <textarea
+                                name="aboutMe"
+                                value={formValues.aboutMe}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <button type="submit">Save Changes</button>
+                    </form>
+                )}
             </div>
         </div>
-    );
+    </div>
+);
+
 }
 
 export default UserProfile;

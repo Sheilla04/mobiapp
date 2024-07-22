@@ -11,7 +11,7 @@ const resources = [
 
 const ResourcesPage = () => {
   return (
-    <div className='resource-container' style={{ paddingTop: '20px' }}>
+    <div className='resource-container' style={{ paddingTop: '50px' }}>
       <div className="resources-page" >
         <h2>Resources</h2>
         <div className="cards-container">

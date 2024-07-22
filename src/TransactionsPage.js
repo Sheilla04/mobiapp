@@ -228,119 +228,122 @@ const TransactionsPage = () => {
   };
 
   return (
-    <div className="transactions-page">
-      <h2>Transactions</h2>
-      <UploadPDF />
-      <div className="controls">
-        <input
-          type="text"
-          placeholder="Search by category..."
-          value={searchTerm}
-          onChange={handleSearchChange}
-        />
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Amount</th>
-            <th>Transaction Type</th>
-            <th>Category</th>
-            <th>Cost</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredTransactions.map((transaction, index) => (
-            <tr key={index}>
-              <td>{getTimeAgo(transaction.date)}</td>
-              <td>{transaction.amount}</td>
-              <td>{transaction.transactionType}</td>
-              <td>{transaction.category}</td>
-              <td>{transaction.cost}</td>
-              <td>
-                <FontAwesomeIcon
-                  icon={faEdit}
-                  onClick={() => handleEditTransaction(transaction)}
-                  style={{ cursor: 'pointer', marginRight: '18px', color: 'blue' }}
-                />
-                <FontAwesomeIcon
-                  icon={faTrash}
-                  onClick={() => handleDelete(transaction.id)}
-                  style={{ cursor: 'pointer', color: 'red' }}
-                />
-              </td>
+    <div style={{paddingTop:'70px'}}>
+      <div className="transactions-page">
+        <h2>Transactions</h2>
+        
+        <div className="controls">
+          <input
+            type="text"
+            placeholder="Search by category..."
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Transaction Type</th>
+              <th>Category</th>
+              <th>Cost</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="button-group">
-        <button onClick={handleShow}>Add Transaction</button>
-      </div>
+          </thead>
+          <tbody>
+            {filteredTransactions.map((transaction, index) => (
+              <tr key={index}>
+                <td>{getTimeAgo(transaction.date)}</td>
+                <td>{transaction.amount}</td>
+                <td>{transaction.transactionType}</td>
+                <td>{transaction.category}</td>
+                <td>{transaction.cost}</td>
+                <td>
+                  <FontAwesomeIcon
+                    icon={faEdit}
+                    onClick={() => handleEditTransaction(transaction)}
+                    style={{ cursor: 'pointer', marginRight: '18px', color: 'blue' }}
+                  />
+                  <FontAwesomeIcon
+                    icon={faTrash}
+                    onClick={() => handleDelete(transaction.id)}
+                    style={{ cursor: 'pointer', color: 'red' }}
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="button-group" style={{margin:'5px'}}>
+          <button onClick={handleShow}>Add Transaction</button>
+        </div>
+        <UploadPDF />
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>{editData ? 'Edit Transaction' : 'Add Transaction'}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group>
-              <Form.Label>Amount</Form.Label>
-              <Form.Control
-                type="number"
-                name="amount"
-                value={editData ? editData.amount : formData.amount}
-                onChange={handleFormChange}
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Transaction Type</Form.Label>
-              <Form.Control
-                as="select"
-                name="transactionType"
-                value={editData ? editData.transactionType : formData.transactionType}
-                onChange={handleFormChange}
-              >
-                <option value="">Select Type</option>
-                {Object.keys(transactionOptions).map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Category</Form.Label>
-              <Form.Control
-                as="select"
-                name="category"
-                value={editData ? editData.category : formData.category}
-                onChange={handleFormChange}
-              >
-                <option value="">Select Category</option>
-                {(transactionOptions[editData ? editData.transactionType : formData.transactionType] || []).map(
-                  (option) => (
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>{editData ? 'Edit Transaction' : 'Add Transaction'}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group>
+                <Form.Label>Amount</Form.Label>
+                <Form.Control
+                  type="number"
+                  name="amount"
+                  value={editData ? editData.amount : formData.amount}
+                  onChange={handleFormChange}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Transaction Type</Form.Label>
+                <Form.Control
+                  as="select"
+                  name="transactionType"
+                  value={editData ? editData.transactionType : formData.transactionType}
+                  onChange={handleFormChange}
+                >
+                  <option value="">Select Type</option>
+                  {Object.keys(transactionOptions).map((option) => (
                     <option key={option} value={option}>
                       {option}
                     </option>
-                  )
-                )}
-              </Form.Control>
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button
-            variant="primary"
-            onClick={editData ? () => handleUpdateTransaction(editData) : handleAddTransaction}
-          >
-            {editData ? 'Update Transaction' : 'Add Transaction'}
-          </Button>
-        </Modal.Footer>
-      </Modal>
+                  ))}
+                </Form.Control>
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Category</Form.Label>
+                <Form.Control
+                  as="select"
+                  name="category"
+                  value={editData ? editData.category : formData.category}
+                  onChange={handleFormChange}
+                >
+                  <option value="">Select Category</option>
+                  {(transactionOptions[editData ? editData.transactionType : formData.transactionType] || []).map(
+                    (option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    )
+                  )}
+                </Form.Control>
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button
+              variant="primary"
+              onClick={editData ? () => handleUpdateTransaction(editData) : handleAddTransaction}
+            >
+              {editData ? 'Update Transaction' : 'Add Transaction'}
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
     </div>
   );
 };

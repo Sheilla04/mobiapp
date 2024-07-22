@@ -82,42 +82,42 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard container-fluid">
+    <div className="dashboard container-fluid" style={{paddingTop:'30px'}}>
       <div className="row g-3 my-2">
         <div className="col-md-3">
-          <div className="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+          <div className="p-3 shadow-sm d-flex justify-content-around align-items-center rounded" style={{backgroundColor:'#5dd9ff'}}>
             <div>
-              <h3 className="fs-2">{totalTransactions}</h3>
-              <p className="fs-5">Total Transactions</p>
+              <h3 className="fs-2" style={{color:'white'}}>{totalTransactions}</h3>
+              <p className="fs-5" >Total Transactions</p>
             </div>
-            <i className="bi bi-cart-plus p-3 fs-1"></i>
+            <i className="bi bi-cart-plus p-3 fs-1" style={{color:'white'}}></i>
           </div>
         </div>
         <div className="col-md-3">
-          <div className="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+          <div className="p-3 shadow-sm d-flex justify-content-around align-items-center rounded" style={{backgroundColor:'teal'}}>
             <div>
               <h3 className="fs-2">{totalCost.toFixed(2)}</h3>
               <p className="fs-5">Total Cost (Ksh)</p>
             </div>
-            <i className="bi bi-currency-dollar p-3 fs-1"></i>
+            <i className="bi bi-currency-dollar p-3 fs-1" style={{color:'white'}}></i>
           </div>
         </div>
         <div className="col-md-3">
-          <div className="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+          <div className="p-3 shadow-sm d-flex justify-content-around align-items-center rounded" style={{backgroundColor:'indigo'}} >
             <div>
               <h3 className="fs-2">...</h3>
               <p className="fs-5">...</p>
             </div>
-            <i className="bi bi-receipt p-3 fs-1"></i>
+            <i className="bi bi-receipt p-3 fs-1" style={{color:'white'}}></i>
           </div>
         </div>
         <div className="col-md-3">
-          <div className="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+          <div className="p-3 shadow-sm d-flex justify-content-around align-items-center rounded" style={{backgroundColor:'green'}}>
             <div>
               <h3 className="fs-2">...</h3>
               <p className="fs-5">...</p>
             </div>
-            <i className="bi bi-people p-3 fs-1"></i>
+            <i className="bi bi-people p-3 fs-1" style={{color:'white'}}></i>
           </div>
         </div>
       </div>
@@ -159,7 +159,7 @@ const Dashboard = () => {
           <div className="card">
             <div className="card-header"><strong>List of Charges</strong></div>
             <div className="card-body">
-              <div className="d-flex justify-content-end mb-2">
+              <div className="d-flex justify-content-right mb-2">
                 <input
                   type="text"
                   className="form-control w-25"
