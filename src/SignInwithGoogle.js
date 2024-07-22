@@ -1,32 +1,45 @@
-import { GoogleAuthProvider } from 'firebase/auth';
-import googleIcon from './assets/google.png';
-import { signInWithPopup } from 'firebase/auth';
-import { auth, db } from './config/firebase-config';
-import { doc, setDoc } from 'firebase/firestore';
+import React, { useState } from 'react';
+import { GoogleAuthProvider, signInWithPopup, signInWithRedirect } from 'firebase/auth';
+// import googleIcon from './assets/google.png'; // Ensure this path is correct
+import { auth } from './config/firebase-config';
+import './SignInwithGoogle.css';
 
-function SignInwithGoogle(){
-    function googleLogin(){
+function SignInwithGoogle() {
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+    function googleLogin() {
+        if (isPopupOpen) {
+            return;
+        }
+        setIsPopupOpen(true);
+
         const provider = new GoogleAuthProvider();
-        signInWithPopup(auth, provider).then(async(result) => {
-            console.log(result);
-            const user = result.user;
-            if (result.user) {
-                await setDoc(doc(db,"Users", user.uid), {
-                    email:user.email,
-                    name:user.displayName,
-                    photo:user.photoURL,
-                  });
-                window.location.href = "/dashboard";
-            }
-        });
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                console.log(result);
+                setIsPopupOpen(false);
+                if (result.user) {
+                    window.location.href = "/dashboard";
+                }
+            })
+            .catch((error) => {
+                console.error("Error during sign-in:", error);
+                setIsPopupOpen(false);
+
+                if (error.code === 'auth/popup-blocked' || error.code === 'auth/cancelled-popup-request') {
+                    signInWithRedirect(auth, provider);
+                }
+            });
     }
-    return(
-        <div onClick={googleLogin}>
-            <p className="continue-p"> --Or continue with--</p>
-            <div>
-                <img src={googleIcon} alt="Google icon"/>
-            </div>
+
+    return (
+        <div>
+            <p className="continue-p">--Or continue with--</p>
+            <button className="google-login-btn" onClick={googleLogin}>
+                Sign in with Google
+            </button>
         </div>
-    )
+    );
 }
+
 export default SignInwithGoogle;

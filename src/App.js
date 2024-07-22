@@ -24,7 +24,7 @@ const Layout = ({ children }) => {
   const showNavbar = location.pathname !== '/login' && location.pathname !== '/signup';
 
   return (
-    <div className="app-container">
+    <div className="">
       {showNavbar && <Sidebar />}
       <div className="content">
         {showNavbar && <TopNavBar />}
@@ -53,3 +53,4 @@ function App() {
 }
 
 export default App;
+
