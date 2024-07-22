@@ -1,6 +1,54 @@
-/* src/App.css */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+
+}
+
+.app-container {
+  display: flex;
+  height: 100%;
+  width: 100vw;
+}
+
+.sidebar {
+  background-color: #333;
+  color: #fff;
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 20px;
+}
+
+.content {
+  margin-left: 250px;
+  padding: 20px;
+  background-color: #f0f0f0;
+  flex-grow: 1;
+}
+
+
 
 body {
+  background-color: #e9ecef;
+}
+
+.container-fluid {
+  width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+
+
+
+
+/* src/App.css */
+
+/* body {
   font-family: Arial, sans-serif;
   background-color: #f0f0f0;
   margin: 0;
@@ -9,8 +57,8 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-}
-
+} */
+/* 
 .container {
   background-color: #fff;
   padding: 20px;
@@ -75,7 +123,7 @@ a:hover {
 .content {
   flex: 1;
   padding: 20px;
-  margin-left: 250px; /* Width of the sidebar */
+  margin-left: 250px; 
 }
 
 .content.with-sidebar {
@@ -84,4 +132,4 @@ a:hover {
 
 .content:not(.with-sidebar) {
   margin-left: 0;
-}
+} */
