@@ -29,7 +29,7 @@ function TopNavBar() {
               Mobibudget
             </button>
             <div className="dropdown-menu" aria-labelledby="dropdownId">
-              <button className="dropdown-item btn btn-link" style={{ color: 'blue' }}>Profile</button>
+              <button className="dropdown-item btn btn-link" style={{ color: 'black' }}>Profile</button>
               <button className="dropdown-item btn btn-link" style={{ color: 'black' }}>Settings</button>
               <button className="dropdown-item btn btn-link" style={{ color: 'black' }}>Logout</button>
               
