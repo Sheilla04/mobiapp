@@ -2,22 +2,23 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import TopNavBar from './TopNavBar';
-import Login from './Login';
-import Signup from './Signup';
-import Dashboard from './Dashboard';
-import TransactionsPage from './TransactionsPage';
-import ResourcesPage from './ResourcesPage';
-import UserProfile from './UserProfile';
-import Settings from './Settings';
-import Sidebar from './Sidebar';
-import './App.css';
-import './Dashboard.css';
-import './TransactionsPage.css';
-import './ResourcesPage.css';
-import './UserProfile.css';
-import './Settings.css';
-import './Sidebar.css';
+import TopNavBar from './pages/TopNavBar';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Dashboard from './pages/Dashboard';
+import TransactionsPage from './pages/TransactionsPage';
+import ResourcesPage from './pages/ResourcesPage';
+import UserProfile from './pages/UserProfile';
+import Settings from './pages/Settings';
+import Sidebar from './pages/Sidebar';
+import './styles//App.css';
+import './styles/Dashboard.css';
+import './styles/TransactionsPage.css';
+import './styles/ResourcesPage.css';
+import './styles/UserProfile.css';
+import './styles/Settings.css';
+import './styles/Sidebar.css';
+
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -53,4 +54,6 @@ function App() {
 }
 
 export default App;
+
+
 

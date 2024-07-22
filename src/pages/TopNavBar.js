@@ -1,6 +1,6 @@
 import React from "react";
 import 'bootstrap/js/dist/dropdown';
-import './navbar.css'
+import '../styles/navbar.css'
 
 function TopNavBar() {
   return (

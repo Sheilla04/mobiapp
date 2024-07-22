@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { GoogleAuthProvider, signInWithPopup, signInWithRedirect } from 'firebase/auth';
 // import googleIcon from './assets/google.png'; // Ensure this path is correct
 import { auth } from './config/firebase-config';
-import './SignInwithGoogle.css';
+import './styles/SignInwithGoogle.css';
 
 function SignInwithGoogle() {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
