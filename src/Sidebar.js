@@ -23,7 +23,7 @@ const Sidebar = () => {
         <ul className={isOpen ? 'visible' : 'hidden'}>
           <li><NavLink to="/dashboard" activeClassName="active">Dashboard</NavLink></li>
           <li><NavLink to="/transactions" activeClassName="active">Transactions</NavLink></li>
-          <li><NavLink to="/resources" activeClassName="active">Sources</NavLink></li>
+          <li><NavLink to="/transactioninput" activeClassName="active">Tariff Compare</NavLink></li>
           <li><NavLink to="/userprofile" activeClassName="active">Profile</NavLink></li>
           <li><NavLink to="/settings" activeClassName="active">Settings</NavLink></li>
         </ul>
