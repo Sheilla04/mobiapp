@@ -11,7 +11,7 @@ import ResourcesPage from './pages/ResourcesPage';
 import UserProfile from './pages/UserProfile';
 import Settings from './pages/Settings';
 import Sidebar from './pages/Sidebar';
-import './styles//App.css';
+import './styles/App.css';
 import './styles/Dashboard.css';
 import './styles/TransactionsPage.css';
 import './styles/ResourcesPage.css';
