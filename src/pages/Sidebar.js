@@ -20,9 +20,9 @@ const Sidebar = () => {
           <i className="bi bi-house fs-4 me-3"></i>
           <span>Transactions</span>
         </NavLink>
-        <NavLink to="/resources" className="list-group-item py-2 btn btn-link" activeClassName="active">
+        <NavLink to="/transactioninput" className="list-group-item py-2 btn btn-link" activeClassName="active">
           <i className="bi bi-table fs-5 me-3"></i>
-          <span>Sources</span>
+          <span>Tarrif Compare</span>
         </NavLink>
         <NavLink to="/userprofile" className="list-group-item py-2 btn btn-link" activeClassName="active">
           <i className="bi bi-clipboard-data fs-5 me-3"></i>

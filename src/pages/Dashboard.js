@@ -4,6 +4,7 @@ import 'chart.js/auto';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebase-config';
 import { useGetUserInfo } from '../hooks/useGetUserInfo';
+import 'chartjs-adapter-date-fns';
 import '../styles/Dashboard.css';
 
 const Dashboard = () => {
@@ -23,6 +24,10 @@ const Dashboard = () => {
         ...doc.data(),
         date: doc.data().date ? doc.data().date.toDate() : null,
       }));
+
+      // Sort transactions by date in ascending order (oldest first)
+      fetchedTransactions.sort((a, b) => a.date - b.date);
+
       setTransactions(fetchedTransactions);
     };
 
@@ -44,13 +49,15 @@ const Dashboard = () => {
       {
         label: 'Amount of costs in Ksh',
         data: transactions.map(t => t.cost),
-        fill: false,
+        fill: true,
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
         borderColor: 'rgba(54, 162, 235, 1)', // Changed to blue
-        borderWidth: 2,
-        tension: 0.1
+        borderWidth: 4,
+        tension: 0.4
       }
     ],
   };
+ 
 
   // Prepare data for the Doughnut chart
   const transactionTypes = [...new Set(transactions.map(t => t.transactionType))];
@@ -195,8 +202,6 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-
 
 
 

@@ -7,14 +7,14 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import TransactionsPage from './pages/TransactionsPage';
-import ResourcesPage from './pages/ResourcesPage';
+import TransactionInputPage from './pages/TransactionInputPage';
 import UserProfile from './pages/UserProfile';
 import Settings from './pages/Settings';
 import Sidebar from './pages/Sidebar';
 import './styles/App.css';
 import './styles/Dashboard.css';
 import './styles/TransactionsPage.css';
-import './styles/ResourcesPage.css';
+import './styles/TransactionInputPage.css';
 import './styles/UserProfile.css';
 import './styles/Settings.css';
 import './styles/Sidebar.css';
@@ -45,7 +45,7 @@ function App() {
         <Route path="/" element={<Layout><Login /></Layout>} />
         <Route path="/dashboard" element={<Layout><Dashboard /></Layout>} />
         <Route path="/transactions" element={<Layout><TransactionsPage /></Layout>} />
-        <Route path="/resources" element={<Layout><ResourcesPage /></Layout>} />
+        <Route path="/transactioninput" element={<Layout><TransactionInputPage /></Layout>} />
         <Route path="/userprofile" element={<Layout><UserProfile /></Layout>} />
         <Route path="/settings" element={<Layout><Settings /></Layout>} />
       </Routes>
