@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
-import './Signup.css'; // Import the CSS file
+import { Link, useNavigate } from 'react-router-dom';
+import './Signup.css'; 
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from './config/firebase-config';
 //import { Database, getDatabase } from "firebase/database";
@@ -81,9 +81,3 @@ function Signup() {
 }
 
 export default Signup;
-
-
-
-
-
-
