@@ -34,49 +34,51 @@ function Signup() {
   };
 
   return (
-    <div className="main-container">
-      <div className="signup-container">
-        <h2>Sign Up</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="input-group">
-            <label>Name:</label>
-            <input 
-              type="text" 
-              name="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </div>
-          <div className="input-group">
-            <label>Email:</label>
-            <input 
-              type="email" 
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="input-group">
-            <label>Password:</label>
-            <input 
-              type="password" 
-              name="password" 
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required 
-            />
-          </div>
-          <button type="submit">Sign Up</button>
-        </form>
-        <p>Already have an account? <Link to="/login">Login</Link></p>
-        <ToastContainer /> {/* Add ToastContainer */}
+    <div className='signUp-body'>
+      <div className="main-container">
+        <div className="signup-container">
+          <h2>Sign Up</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="input-group">
+              <label>Name:</label>
+              <input 
+                type="text" 
+                name="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label>Email:</label>
+              <input 
+                type="email" 
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label>Password:</label>
+              <input 
+                type="password" 
+                name="password" 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required 
+              />
+            </div>
+            <button type="submit">Sign Up</button>
+          </form>
+          <p>Already have an account? <Link to="/login">Login</Link></p>
+          <ToastContainer /> {/* Add ToastContainer */}
+        </div>
+        <div className="image-container">
+          <img src="/logo-no-background.png" alt="Signup" />
+        </div>
       </div>
-      <div className="image-container">
-        <img src="/logo-no-background.png" alt="Signup" />
-      </div>
-    </div>
+    </div>  
   );
 }
 

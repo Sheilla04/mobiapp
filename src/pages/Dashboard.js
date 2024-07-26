@@ -5,6 +5,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebase-config';
 import { useGetUserInfo } from '../hooks/useGetUserInfo';
 import '../styles/Dashboard.css';
+import { width } from '@fortawesome/free-solid-svg-icons/fa0';
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -139,15 +140,15 @@ const Dashboard = () => {
         <div className="col-md-6">
           <div className="card">
             <div className="card-header"><strong>Breakdown of Transactions</strong></div>
-            <div className="card-body">
+            <div className="card-body" style={{height:'25vw', width:'25vw'}}>
               <Doughnut data={doughnutData} />
             </div>
           </div>
         </div>
         <div className="col-md-6">
           <div className="card">
-            <div className="card-header"><strong>Cost Analysis by Category</strong></div>
-            <div className="card-body">
+            <div className="card-header" ><strong>Cost Analysis by Category</strong></div>
+            <div className="card-body" style={{height:'25vw', width:'25vw'}}>
               <Bar data={barData} />
             </div>
           </div>

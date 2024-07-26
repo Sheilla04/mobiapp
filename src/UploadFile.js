@@ -31,7 +31,7 @@ const UploadPDF = () => {
       <Button 
       variant="primary" 
       onClick={handleShow}
-      style={{backgroundColor:'#525e6c', width:'400px', marginLeft:'9.5vw',}}>
+      style={{display:'none'}}>
         Upload M-Pesa Statement
       </Button>
 
