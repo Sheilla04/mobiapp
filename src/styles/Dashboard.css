@@ -1,4 +1,4 @@
-.app-container {
+/* .app-container {
   display: flex;
   width:100vw;
 }
@@ -21,16 +21,7 @@
   color: #fff;
 }
 
-/*.navbar {
-  position: fixed;
-  width: calc(100% - 250px);
-  left: 250px;
-  top: 0;
-  z-index: 1001;
-  background-color: #fff;
-  padding: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}*/
+
 
 .card {
   margin-bottom: 20px;
@@ -55,16 +46,7 @@
   align-items: center;
 }
 
-/*.navbar {
-  position: fixed;
-  width: calc(100% - 250px);
-  left: 250px;
-  top: 0;
-  z-index: 1001;
-  background-color: #fff;
-  padding: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}*/
+
 
 .card {
   margin-bottom: 20px;
@@ -84,10 +66,122 @@
     padding: 10px;
   }
 
-  /*.navbar {
-    width: 100%;
-    left: 0;
-  }*/
+
+} */
+
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap');
+
+
+body {
+  font-family: 'Oswald', sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+.dashboard {
+  padding-top: 30px;
+}
+
+.card {
+  margin-bottom: 20px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+
+/* .card-header {
+  font-weight: 600;
+  font-size: 20px;
+  background-color: #007bff; 
+  color: white;             
+  padding: 10px 15px;        
+  border-radius: 5px;       
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+} */
+.card-header {
+  font-family: 'Oswald', sans-serif; /* Apply the Oswald font */
+  font-weight: 600;
+  font-size: 20px;
+  background-color: #007bff; 
+  color: white;             
+  padding: 10px 15px;        
+  border-radius: 5px;       
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+
+
+.card-body {
+  padding: 20px;
+}
+
+.card-blue {
+  background-color: #5dd9ff;
+  color: white;
+}
+
+.card-teal {
+  background-color: teal;
+  color: white;
+}
+
+.card-indigo {
+  background-color: indigo;
+  color: white;
+}
+
+.card-green {
+  background-color: green;
+  color: white;
+}
+
+.card h3 {
+  margin: 0;
+}
+
+.card p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.form-control {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.table {
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table th, .table td {
+  padding: 15px;
+  text-align: left;
+}
+
+.table th {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f8f8f8;
+}
+
 
 
