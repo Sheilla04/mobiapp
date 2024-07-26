@@ -1,4 +1,3 @@
-// TransactionInputPage.js
 
 import React, { useState } from 'react';
 import '../styles/TransactionInputPage.css';
@@ -45,69 +44,65 @@ const TransactionInputPage = () => {
   };
 
   return (
-    <div className="container">
-      <h1>Transaction Cost Calculator</h1>
-      <div>
-        <label>
-          Amount:
-          <input 
-            type="number" 
-            value={amount} 
-            onChange={(e) => setAmount(e.target.value)} 
-          />
-        </label>
+    <div className="container transaction-input-page mt-5">
+      <h1 className="mb-4">Transaction Cost Calculator</h1>
+      <div className="form-group">
+        <label>Amount:</label>
+        <input 
+          type="number" 
+          className="form-control" 
+          value={amount} 
+          onChange={(e) => setAmount(e.target.value)} 
+        />
       </div>
-      <div>
-        <label>
-          Provider:
-          <select 
-            value={provider} 
-            onChange={(e) => {
-              setProvider(e.target.value);
-              setCategory(categories[e.target.value][transactionType][0] || '');
-            }}
-          >
-            <option value="Mpesa">Mpesa</option>
-            <option value="Tkash">Tkash</option>
-            <option value="Airtel">Airtel Money</option>
-          </select>
-        </label>
+      <div className="form-group">
+        <label>Provider:</label>
+        <select 
+          className="form-control" 
+          value={provider} 
+          onChange={(e) => {
+            setProvider(e.target.value);
+            setCategory(categories[e.target.value][transactionType][0] || '');
+          }}
+        >
+          <option value="Mpesa">Mpesa</option>
+          <option value="Tkash">Tkash</option>
+          <option value="Airtel">Airtel Money</option>
+        </select>
       </div>
-      <div>
-        <label>
-          Transaction Type:
-          <select 
-            value={transactionType} 
-            onChange={(e) => {
-              setTransactionType(e.target.value);
-              setCategory(categories[provider][e.target.value][0] || '');
-            }}
-          >
-            <option value="Sending">Sending</option>
-            <option value="Receiving">Receiving</option>
-            <option value="Withdrawal">Withdrawal</option>
-          </select>
-        </label>
+      <div className="form-group">
+        <label>Transaction Type:</label>
+        <select 
+          className="form-control" 
+          value={transactionType} 
+          onChange={(e) => {
+            setTransactionType(e.target.value);
+            setCategory(categories[provider][e.target.value][0] || '');
+          }}
+        >
+          <option value="Sending">Sending</option>
+          <option value="Receiving">Receiving</option>
+          <option value="Withdrawal">Withdrawal</option>
+        </select>
       </div>
-      <div>
-        <label>
-          Category:
-          <select 
-            value={category} 
-            onChange={(e) => setCategory(e.target.value)}
-            disabled={(
-              (transactionType === 'Receiving' && (provider === 'Tkash' || provider === 'Airtel')) ||
-              (transactionType === 'Withdrawal' && (provider === 'Tkash' || provider === 'Airtel'))
-            )}
-          >
-            {categories[provider][transactionType].map(cat => (
-              <option key={cat} value={cat}>{cat}</option>
-            ))}
-          </select>
-        </label>
+      <div className="form-group">
+        <label>Category:</label>
+        <select 
+          className="form-control" 
+          value={category} 
+          onChange={(e) => setCategory(e.target.value)}
+          disabled={(
+            (transactionType === 'Receiving' && (provider === 'Tkash' || provider === 'Airtel')) ||
+            (transactionType === 'Withdrawal' && (provider === 'Tkash' || provider === 'Airtel'))
+          )}
+        >
+          {categories[provider][transactionType].map(cat => (
+            <option key={cat} value={cat}>{cat}</option>
+          ))}
+        </select>
       </div>
-      <button onClick={handleCalculate}>Calculate</button>
-      <table>
+      <button className="btn btn-primary" onClick={handleCalculate}>Calculate</button>
+      <table className="table mt-4">
         <thead>
           <tr>
             <th>Amount</th>

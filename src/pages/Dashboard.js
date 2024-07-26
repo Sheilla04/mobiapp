@@ -57,7 +57,11 @@ const Dashboard = () => {
       }
     ],
   };
- 
+
+  const lineOptions = {
+    maintainAspectRatio: false,
+    responsive: true,
+  };
 
   // Prepare data for the Doughnut chart
   const transactionTypes = [...new Set(transactions.map(t => t.transactionType))];
@@ -73,7 +77,12 @@ const Dashboard = () => {
     ],
   };
 
-  // Prepare data for the Bar chart
+  const doughnutOptions = {
+    maintainAspectRatio: false,
+    responsive: true,
+  };
+
+  // Prepare data for the Bar chart with different colors
   const categories = [...new Set(transactions.map(t => t.category))];
   const barData = {
     labels: categories,
@@ -81,61 +90,78 @@ const Dashboard = () => {
       {
         label: 'Total Costs per Category',
         data: categories.map(category => transactions.filter(t => t.category === category).reduce((acc, curr) => acc + (curr.cost || 0), 0)),
-        backgroundColor: 'rgba(75, 192, 192, 0.6)',
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.6)', // Red
+          'rgba(54, 162, 235, 0.6)', // Blue
+          'rgba(75, 192, 192, 0.6)', // Green
+          'rgba(153, 102, 255, 0.6)', // Purple
+          'rgba(255, 159, 64, 0.6)'  // Orange
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 2,
       },
     ],
   };
 
+  const barOptions = {
+    maintainAspectRatio: false,
+    responsive: true,
+  };
+
   return (
-    <div className="dashboard container-fluid" style={{paddingTop:'30px'}}>
+    <div className="dashboard container-fluid">
       <div className="row g-3 my-2">
         <div className="col-md-3">
-          <div className="p-3 shadow-sm d-flex justify-content-around align-items-center rounded" style={{backgroundColor:'#5dd9ff'}}>
+          <div className="p-3 shadow-sm d-flex justify-content-around align-items-center rounded card-blue">
             <div>
-              <h3 className="fs-2" style={{color:'white'}}>{totalTransactions}</h3>
-              <p className="fs-5" >Total Transactions</p>
+              <h3 className="fs-2">{totalTransactions}</h3>
+              <p className="fs-5">Total Transactions</p>
             </div>
-            <i className="bi bi-cart-plus p-3 fs-1" style={{color:'white'}}></i>
+            <i className="bi bi-cart-plus p-3 fs-1"></i>
           </div>
         </div>
         <div className="col-md-3">
-          <div className="p-3 shadow-sm d-flex justify-content-around align-items-center rounded" style={{backgroundColor:'teal'}}>
+          <div className="p-3 shadow-sm d-flex justify-content-around align-items-center rounded card-teal">
             <div>
               <h3 className="fs-2">{totalCost.toFixed(2)}</h3>
               <p className="fs-5">Total Cost (Ksh)</p>
             </div>
-            <i className="bi bi-currency-dollar p-3 fs-1" style={{color:'white'}}></i>
+            <i className="bi bi-currency-dollar p-3 fs-1"></i>
           </div>
         </div>
         <div className="col-md-3">
-          <div className="p-3 shadow-sm d-flex justify-content-around align-items-center rounded" style={{backgroundColor:'indigo'}} >
+          <div className="p-3 shadow-sm d-flex justify-content-around align-items-center rounded card-indigo">
             <div>
               <h3 className="fs-2">...</h3>
               <p className="fs-5">...</p>
             </div>
-            <i className="bi bi-receipt p-3 fs-1" style={{color:'white'}}></i>
+            <i className="bi bi-receipt p-3 fs-1"></i>
           </div>
         </div>
         <div className="col-md-3">
-          <div className="p-3 shadow-sm d-flex justify-content-around align-items-center rounded" style={{backgroundColor:'green'}}>
+          <div className="p-3 shadow-sm d-flex justify-content-around align-items-center rounded card-green">
             <div>
               <h3 className="fs-2">...</h3>
               <p className="fs-5">...</p>
             </div>
-            <i className="bi bi-people p-3 fs-1" style={{color:'white'}}></i>
+            <i className="bi bi-people p-3 fs-1"></i>
           </div>
         </div>
       </div>
 
       <div className="row my-5">
         <div className="col-md-12">
-          <div className="card">
+          <div className="card shadow-sm">
             <div className="card-header"><strong>Transactions Overview</strong></div>
             <div className="card-body">
               <div style={{ height: '400px', width: '100%' }}>
-                <Line data={lineData} />
+                <Line data={lineData} options={lineOptions} />
               </div>
             </div>
           </div>
@@ -144,18 +170,22 @@ const Dashboard = () => {
 
       <div className="row my-5">
         <div className="col-md-6">
-          <div className="card">
+          <div className="card shadow-sm">
             <div className="card-header"><strong>Breakdown of Transactions</strong></div>
             <div className="card-body">
-              <Doughnut data={doughnutData} />
+              <div style={{ height: '400px', width: '100%' }}>
+                <Doughnut data={doughnutData} options={doughnutOptions} />
+              </div>
             </div>
           </div>
         </div>
         <div className="col-md-6">
-          <div className="card">
+          <div className="card shadow-sm">
             <div className="card-header"><strong>Cost Analysis by Category</strong></div>
             <div className="card-body">
-              <Bar data={barData} />
+              <div style={{ height: '400px', width: '100%' }}>
+                <Bar data={barData} options={barOptions} />
+              </div>
             </div>
           </div>
         </div>
@@ -163,7 +193,7 @@ const Dashboard = () => {
 
       <div className="row mt-5">
         <div className="col-12">
-          <div className="card">
+          <div className="card shadow-sm">
             <div className="card-header"><strong>List of Charges</strong></div>
             <div className="card-body">
               <div className="d-flex justify-content-right mb-2">
@@ -202,9 +232,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-
-
-
-
-

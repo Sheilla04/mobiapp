@@ -1,3 +1,5 @@
+
+
 .transaction-input-page {
   padding: 20px;
 }
@@ -8,4 +10,22 @@
 
 .transaction-input-page table {
   margin-top: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.transaction-input-page th, .transaction-input-page td {
+  padding: 15px;
+  text-align: left;
+}
+
+.transaction-input-page th {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+.transaction-input-page tbody tr:nth-child(even) {
+  background-color: #f8f8f8;
 }

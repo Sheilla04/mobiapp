@@ -1,19 +1,62 @@
-.navbar{
+/* 
+  .navbar {
+    position: fixed;
+    width: 83vw;
+    top: 0;
+    z-index: 1001;
+    background-color: #ffffff;
+    padding-left: 80px;
+    font-family: 'Oswald', sans-serif; 
+  }
+  
+  .navbar button {
+    color: black;
+  }
+  
+  .dropdown-menu button {
+    color: rgb(0, 0, 0);
+  }
+  
+  .profile-pic {
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%; 
+    object-fit: cover; 
+  }
+   */
+ 
+
+   /* Apply Oswald font to the navbar */
+
+   /* Apply Fira Sans font globally or to specific elements */
+body {
+  font-family: 'Fira Sans', sans-serif;
+}
+
+/* Apply Oswald font to the navbar */
+.navbar {
   position: fixed;
   width: 83vw;
   top: 0;
   z-index: 1001;
   background-color: #ffffff;
   padding-left: 80px;
-  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+  font-family: 'Oswald', sans-serif; /* Apply Oswald font */
 }
 
-  .navbar button{
-    color:black
-  }
-  
-  .dropdown-menu button{
-    color: rgb(0, 0, 0);
-  }
+/* Use Outfit font with a unique class name */
+.outfit-custom {
+  font-family: 'Outfit', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300; /* You can use any weight from 100 to 900 */
+  font-style: normal;
+}
 
- 
+/* Profile picture styling */
+.profile-pic {
+  width: 40px; /* Adjust size as needed */
+  height: 40px; /* Ensure the height matches */
+  border-radius: 50%; /* Make it round */
+  object-fit: cover; /* Ensure the image covers the circle */
+}
+
