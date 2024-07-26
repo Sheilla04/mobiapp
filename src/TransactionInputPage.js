@@ -1,7 +1,6 @@
-// TransactionInputPage.js
-
 import React, { useState } from 'react';
-import './TransactionInputPage.css';
+import { Container, Row, Col, Form, Button, Table } from 'react-bootstrap';
+import './TransactionInputPage.css'; // Import the custom CSS file
 import { calculateTransactionCost } from './hooks/costCalculationsInput';
 
 const TransactionInputPage = () => {
@@ -45,69 +44,86 @@ const TransactionInputPage = () => {
   };
 
   return (
-    <div className="container">
-      <h1>Transaction Cost Calculator</h1>
-      <div>
-        <label>
-          Amount:
-          <input 
-            type="number" 
-            value={amount} 
-            onChange={(e) => setAmount(e.target.value)} 
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          Provider:
-          <select 
-            value={provider} 
-            onChange={(e) => {
-              setProvider(e.target.value);
-              setCategory(categories[e.target.value][transactionType][0] || '');
-            }}
-          >
-            <option value="Mpesa">Mpesa</option>
-            <option value="Tkash">Tkash</option>
-            <option value="Airtel">Airtel Money</option>
-          </select>
-        </label>
-      </div>
-      <div>
-        <label>
-          Transaction Type:
-          <select 
-            value={transactionType} 
-            onChange={(e) => {
-              setTransactionType(e.target.value);
-              setCategory(categories[provider][e.target.value][0] || '');
-            }}
-          >
-            <option value="Sending">Sending</option>
-            <option value="Receiving">Receiving</option>
-            <option value="Withdrawal">Withdrawal</option>
-          </select>
-        </label>
-      </div>
-      <div>
-        <label>
-          Category:
-          <select 
-            value={category} 
-            onChange={(e) => setCategory(e.target.value)}
-            disabled={(
-              (transactionType === 'Receiving' && (provider === 'Tkash' || provider === 'Airtel')) ||
-              (transactionType === 'Withdrawal' && (provider === 'Tkash' || provider === 'Airtel'))
-            )}
-          >
-            {categories[provider][transactionType].map(cat => (
-              <option key={cat} value={cat}>{cat}</option>
-            ))}
-          </select>
-        </label>
-      </div>
-      <button onClick={handleCalculate}>Calculate</button>
-      <table>
+    <Container className="transaction-input-page">
+      <h1 className="my-4">Transaction Cost Calculator</h1>
+      <Form>
+        <Form.Group as={Row} className="mb-3">
+          <Form.Label column sm="2" className="custom-label">
+            Amount:
+          </Form.Label>
+          <Col sm="10">
+            <Form.Control 
+              type="number" 
+              value={amount} 
+              onChange={(e) => setAmount(e.target.value)} 
+              className="custom-input"
+            />
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row} className="mb-3">
+          <Form.Label column sm="2" className="custom-label">
+            Provider:
+          </Form.Label>
+          <Col sm="10">
+            <Form.Control 
+              as="select" 
+              value={provider} 
+              onChange={(e) => {
+                setProvider(e.target.value);
+                setCategory(categories[e.target.value][transactionType][0] || '');
+              }}
+              className="custom-select"
+            >
+              <option value="Mpesa">Mpesa</option>
+              <option value="Tkash">Tkash</option>
+              <option value="Airtel">Airtel Money</option>
+            </Form.Control>
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row} className="mb-3">
+          <Form.Label column sm="2" className="custom-label">
+            Transaction Type:
+          </Form.Label>
+          <Col sm="10">
+            <Form.Control 
+              as="select" 
+              value={transactionType} 
+              onChange={(e) => {
+                setTransactionType(e.target.value);
+                setCategory(categories[provider][e.target.value][0] || '');
+              }}
+              className="custom-select"
+            >
+              <option value="Sending">Sending</option>
+              <option value="Receiving">Receiving</option>
+              <option value="Withdrawal">Withdrawal</option>
+            </Form.Control>
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row} className="mb-3">
+          <Form.Label column sm="2" className="custom-label">
+            Category:
+          </Form.Label>
+          <Col sm="10">
+            <Form.Control 
+              as="select" 
+              value={category} 
+              onChange={(e) => setCategory(e.target.value)}
+              disabled={(
+                (transactionType === 'Receiving' && (provider === 'Tkash' || provider === 'Airtel')) ||
+                (transactionType === 'Withdrawal' && (provider === 'Tkash' || provider === 'Airtel'))
+              )}
+              className="custom-select"
+            >
+              {categories[provider][transactionType].map(cat => (
+                <option key={cat} value={cat}>{cat}</option>
+              ))}
+            </Form.Control>
+          </Col>
+        </Form.Group>
+        <Button onClick={handleCalculate} className="mb-3 custom-button">Calculate</Button>
+      </Form>
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th>Amount</th>
@@ -126,8 +142,8 @@ const TransactionInputPage = () => {
             </tr>
           ))}
         </tbody>
-      </table>
-    </div>
+      </Table>
+    </Container>
   );
 };
 

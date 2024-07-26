@@ -1,24 +1,23 @@
-// src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify'; // Import ToastContainer
-import 'react-toastify/dist/ReactToastify.css'; // Import CSS for toast notifications
-import TopNavBar from './TopNavBar';
-import Login from './Login';
-import Signup from './Signup';
-import Dashboard from './Dashboard';
-import TransactionsPage from './TransactionsPage';
-import TransactionInputPage from './TransactionInputPage';
-import UserProfile from './UserProfile';
-import Settings from './Settings';
-import Sidebar from './Sidebar';
-import './App.css'; // Import the CSS file
-import './Dashboard.css'; // Import the Dashboard CSS
-import './TransactionsPage.css'; // Import the TransactionsPage CSS
-import './TransactionInputPage.css'; // Import the ResourcesPage CSS
-import './UserProfile.css'; // Import the UserProfile CSS
-import './Settings.css'; // Import the Settings.css
-import './Sidebar.css'; // Import the Sidebar.css
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import TopNavBar from './pages/TopNavBar';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Dashboard from './pages/Dashboard';
+import TransactionsPage from './pages/TransactionsPage';
+import TransactionInputPage from './pages/TransactionInputPage';
+import UserProfile from './pages/UserProfile';
+import Settings from './pages/Settings';
+import Sidebar from './pages/Sidebar';
+import './styles/App.css';
+import './styles/Dashboard.css';
+import './styles/TransactionsPage.css';
+import './styles/TransactionInputPage.css';
+import './styles/UserProfile.css';
+import './styles/Settings.css';
+import './styles/Sidebar.css';
 
 
 const Layout = ({ children }) => {
@@ -26,9 +25,10 @@ const Layout = ({ children }) => {
   const showNavbar = location.pathname !== '/login' && location.pathname !== '/signup';
 
   return (
-    <div className="app-container">
-      {showNavbar && <TopNavBar/> && <Sidebar /> }
+    <div className="">
+      {showNavbar && <Sidebar />}
       <div className="content">
+        {showNavbar && <TopNavBar />}
         {children}
       </div>
     </div>
@@ -38,7 +38,7 @@ const Layout = ({ children }) => {
 function App() {
   return (
     <Router>
-      <ToastContainer /> {/* Render ToastContainer once */}
+      <ToastContainer />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
@@ -54,3 +54,5 @@ function App() {
 }
 
 export default App;
+
+

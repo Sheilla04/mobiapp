@@ -1,0 +1,149 @@
+
+.login-page {
+   background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Full height of the viewport */
+  padding: 20px;
+}
+/* Main container styling */
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh; /* Adjust height as needed */
+  padding: 20px;
+  background-color: #0f74e0;
+}
+/* Login container styling */
+.login-container {
+  width: 400px; /* Adjust width as needed */
+  height: 69vh;
+  background-color: #ffff; /* Semi-transparent white background */
+  padding: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  border-radius: 12px; /* Rounded corners */
+  backdrop-filter: blur(10px); /* Apply backdrop filter for blur effect */
+}
+
+/* Header styling */
+.login-container h2 {
+  text-align: center;
+  margin-bottom: 20px; /* Space below heading */
+  color: #00190e; /* Adjust text color */
+}
+.image-container img{
+  background-color: #3a88fe4e;
+}
+/* Input group styling */
+.input-group {
+  margin-bottom: 20px; /* Space between input groups */
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px; /* Space below label */
+  color: #001004; /* Adjust label text color */
+  font-size: 16px; /* Adjust font size */
+}
+
+.input-group input {
+  width: 100%; /* Full width input */
+  padding: 10px; /* Padding inside input */
+  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent input background */
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Transparent border with soft shadow */
+  border-radius: 4px; /* Rounded corners */
+  transition: background-color 0.3s ease; /* Smooth transition */
+  font-size: 14px; /* Adjust font size */
+}
+
+.input-group input:focus {
+  background-color: rgba(255, 255, 255, 0.95); /* Lighter background on focus */
+  border: 1px solid #007bff; /* Highlight border on focus */
+  outline: none; /* Remove default outline */
+}
+
+/* Button styling */
+button {
+  width: 100%; /* Full width button */
+  padding: 12px; /* Padding inside button */
+  background-color: #3ef879; /* Button background color */
+  color: rgb(239, 75, 15); /* Button text color */
+  border: none; /* No border */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+  font-size: 16px; /* Font size */
+  margin-top: 10px; /* Space above button */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+/* Paragraph styling */
+p {
+  text-align: center; /* Center-align paragraph */
+  margin-top: 20px; /* Space above paragraph */
+  margin-bottom: 10px; /* Space below paragraph */
+  color: #454847; /* Adjust text color */
+  font-size: 14px; /* Adjust font size */
+}
+
+p a {
+  color: #f32929; /* Link color */
+  text-decoration: none; /* No underline */
+}
+
+p a:hover {
+  text-decoration: underline; /* Underline on hover */
+}
+
+/* Link button styling */
+.link-button {
+  background: none; /* No background */
+  border: none; /* No border */
+  color: #013b17; /* Button text color */
+  cursor: pointer; /* Pointer cursor */
+  text-decoration: underline; /* Underline text */
+  padding: 0; /* No padding */
+  font-size: 14px; /* Font size */
+  margin-top: 5px; /* Space above button */
+}
+
+.link-button:hover {
+  color: #25f14d87; /* Darker text color on hover */
+}
+
+/* Google sign-in button styling */
+.sign-in-google {
+  width: 100%; /* Full width button */
+  padding: 12px; /* Padding inside button */
+  background-color: #1bf522; /* Google button color */
+  color: white; /* Button text color */
+  border: none; /* No border */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+  font-size: 16px; /* Font size */
+  margin-top: 10px; /* Space above button */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.sign-in-google:hover {
+  background-color: #c0352b; /* Darker color on hover */
+}
+
+/* Remove hover effects */
+button:hover, p a:hover, .link-button:hover {
+  background-color: inherit; /* Inherit background color */
+  cursor: default; /* Default cursor */
+}
+
+.login-body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
