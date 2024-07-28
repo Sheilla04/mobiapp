@@ -1,5 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap');
 
+
+/* App.css */
 body {
   font-family: 'Oswald', sans-serif;
   background-color: #f0f0f0;
@@ -8,131 +9,30 @@ body {
   box-sizing: border-box;
 }
 
-
 .app-container {
   display: flex;
-  height: 100%;
   width: 100vw;
-}
-
-.sidebar {
-  background-color: #333;
-  color: #fff;
-  width: 250px;
   height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  padding: 20px;
+  overflow: hidden;
 }
 
 .content {
-  margin-left: 250px;
-  padding: 20px;
-  background-color: #f0f0f0;
   flex-grow: 1;
-}
-
-
-
-body {
-  background-color: #e9ecef;
-}
-
-.container-fluid {
-  width: 100%;
-  padding-left: 15px;
-  padding-right: 15px;
-}
-
-
-
-
-
-/* src/App.css */
-
-/* body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
-  margin: 0;
-  padding: 0;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-} */
-/* 
-.container {
-  background-color: #fff;
+  flex-direction: column;
+  transition: margin-left 0.3s ease-in-out;
+  overflow-y: auto;
+}
+
+.main-content {
+  flex-grow: 1;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 300px;
+  margin-top: 60px; /* Match navbar height */
 }
 
-h2 {
-  text-align: center;
-  margin-bottom: 20px;
+@media (min-width: 992px) {
+  .content {
+    margin-left: 250px; /* Match sidebar width */
+    width: calc(100% - 250px);
+  }
 }
-
-form div {
-  margin-bottom: 15px;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-input[type="email"],
-input[type="password"] {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-}
-
-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-p {
-  text-align: center;
-  margin-top: 10px;
-}
-
-a {
-  color: #007bff;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-.app-container {
-  display: flex;
-}
-
-.content {
-  flex: 1;
-  padding: 20px;
-  margin-left: 250px; 
-}
-
-.content.with-sidebar {
-  margin-left: 250px;
-}
-
-.content:not(.with-sidebar) {
-  margin-left: 0;
-} */

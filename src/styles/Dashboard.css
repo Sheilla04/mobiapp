@@ -1,73 +1,4 @@
-/* .app-container {
-  display: flex;
-  width:100vw;
-}
 
-.content {
-  margin-left: 250px;
-  padding: 20px;
-  flex-grow: 1;
-  background-color: #f0f0f0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.p-3 p{
-  color: #ffffff;
-}
-
-.fs-2{
-  color: #fff;
-}
-
-
-
-.card {
-  margin-bottom: 20px;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-
-.app-container {
-  display: flex;
-}
-
-.content {
-  margin-left: 250px;
-  padding: 20px;
-  flex-grow: 1;
-  background-color: #f0f0f0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-
-
-.card {
-  margin-bottom: 20px;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-}
-
-@media (max-width: 992px) {
-  .app-container {
-    flex-direction: column;
-  }
-
-  .content {
-    margin-left: 0;
-    padding: 10px;
-  }
-
-
-} */
 
 
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap');
@@ -183,5 +114,8 @@ body {
   background-color: #f8f8f8;
 }
 
+.transactions-overview {
+  margin-top: 20px; /* Reduce this value to bring the chart closer to the top */
+}
 
 

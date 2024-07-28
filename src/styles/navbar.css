@@ -1,63 +1,38 @@
 
-body {
-  font-family: 'Fira Sans', sans-serif;
-}
-
-
-.navbar {
-  position: fixed;
-  width: 83vw;
-  top: 0;
-  z-index: 1001;
-  background-color: #ffffff;
-  padding-left: 80px;
-  font-family: 'Oswald', sans-serif; 
-}
-
-
-.outfit-custom {
-  font-family: 'Outfit', sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 300; 
-  font-style: normal;
-}
-
-
-.profile-pic {
-  width: 40px; 
-  height: 40px; 
-  border-radius: 50%; 
-  object-fit: cover; 
-}
 
 /* navbar.css */
-
 .navbar {
   position: fixed;
-  width: calc(100% - 250px);
   top: 0;
-  z-index: 1001;
+  right: 0;
+  left: 0;
+  z-index: 1000;
   background-color: #ffffff;
-  padding-left: 80px;
-  font-family: 'Oswald', sans-serif; 
-  transition: width 0.3s ease-in-out;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  height: 60px; 
 }
 
-@media (max-width: 768px) {
-  .navbar {
-    width: 100%;
-    padding-left: 10px;
-  }
+.navbar-toggler {
+  display: none;
+}
 
+@media (min-width: 992px) {
+  .navbar {
+    left: 250px; /* Match sidebar width */
+    width: calc(100% - 250px);
+  }
+}
+
+@media (max-width: 991px) {
   .navbar-toggler {
     display: block;
   }
+}
 
-  .navbar-brand {
-    display: none;
-  }
-
-  .collapse.navbar-collapse {
-    display: none !important;
-  }
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
 }
