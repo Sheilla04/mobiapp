@@ -5,34 +5,34 @@
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #fff; /* White background */
-    color: #333; /* Dark text color */
+    background-color: #fff; 
+    color: #333;
     padding: 20px;
     transition: width 0.3s;
-    font-family: 'Fira Sans', sans-serif; /* Apply the Fira Sans font */
+    font-family: 'Fira Sans', sans-serif; 
   }
   
   .sidebar .brand-container {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center align the content */
+    align-items: center; 
     text-align: center;
   }
   
   .sidebar .brand-name {
-    font-size: 1.5rem; /* Increase font size */
-    font-weight: 800; /* Make the title bolder */
-    color: #333; /* Dark color for the title */
-    margin-top: 10px; /* Add some spacing between the logo and the title */
+    font-size: 1.5rem; 
+    font-weight: 800; 
+    color: #333;
+    margin-top: 10px; 
   }
   
   .sidebar hr {
-    border-color: #ccc; /* Lighter border color */
+    border-color: #ccc; 
   }
   
   .sidebar .list-group-item {
-    color: #333; /* Dark color for NavLink text */
-    font-weight: 400; /* Ensure the NavLink text is not as bold as the title */
+    color: #333; 
+    font-weight: 400;
   }
   
   .sidebar .list-group-item.active {
@@ -58,7 +58,7 @@
   .sidebar .hamburger-menu {
     cursor: pointer;
     font-size: 24px;
-    color: #333; /* Dark color for the hamburger menu */
+    color: #333; 
     position: absolute;
     top: 20px;
     right: 20px;
@@ -96,7 +96,7 @@
   }
   
   .sidebar nav ul li a {
-    color: #333; /* Dark color for the NavLink text */
+    color: #333; 
     text-decoration: none;
     display: block;
     padding: 10px;
@@ -119,4 +119,8 @@
   .sidebar.closed nav ul li {
     margin: 10px 0;
   }
+
+
   
+
+ 

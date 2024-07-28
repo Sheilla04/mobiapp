@@ -465,3 +465,8 @@ const withdrawalCostTable = {
 };
 
 export default TransactionsPage;
+
+
+
+
+

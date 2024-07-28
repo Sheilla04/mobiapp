@@ -41,6 +41,7 @@ function Signup() {
   };
 
   return (
+    <div className='signup-body'>
     <div className="signup-container">
       <h2>Sign Up</h2>
       <form onSubmit={handleSignup}>
@@ -76,6 +77,7 @@ function Signup() {
       <p>
         Already have an account? <Link to="/login">Login</Link>
       </p>
+    </div>
     </div>
   );
 }
