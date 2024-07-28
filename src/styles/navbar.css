@@ -30,3 +30,34 @@ body {
   object-fit: cover; 
 }
 
+/* navbar.css */
+
+.navbar {
+  position: fixed;
+  width: calc(100% - 250px);
+  top: 0;
+  z-index: 1001;
+  background-color: #ffffff;
+  padding-left: 80px;
+  font-family: 'Oswald', sans-serif; 
+  transition: width 0.3s ease-in-out;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    width: 100%;
+    padding-left: 10px;
+  }
+
+  .navbar-toggler {
+    display: block;
+  }
+
+  .navbar-brand {
+    display: none;
+  }
+
+  .collapse.navbar-collapse {
+    display: none !important;
+  }
+}
