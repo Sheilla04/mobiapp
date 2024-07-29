@@ -1,19 +1,37 @@
-.navbar{
+
+
+
+.navbar {
   position: fixed;
-  width: 83vw;
   top: 0;
-  z-index: 1001;
+  right: 0;
+  left: 250px;
+  z-index: 1000;
   background-color: #ffffff;
-  padding-left: 80px;
-  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+  padding: 0.5rem 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  height: 60px;
 }
 
-  .navbar button{
-    color:black
-  }
-  
-  .dropdown-menu button{
-    color: rgb(0, 0, 0);
+.navbar-toggler {
+  display: none;
+}
+
+@media (max-width: 991px) {
+  .navbar {
+    left: 0;
   }
 
- 
+  .navbar-toggler {
+    display: block;
+  }
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+

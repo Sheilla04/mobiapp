@@ -1,14 +1,80 @@
-// src/Settings.js
-import React, { useState } from 'react';
+
+
+import React, { useState, useEffect } from 'react';
+import { db } from '../config/firebase-config';
+import { collection, addDoc, query, where, getDocs, updateDoc } from 'firebase/firestore';
+import { useGetUserInfo } from '../hooks/useGetUserInfo';
 import '../styles/Settings.css';
+import Swal from 'sweetalert2';
 
 const Settings = () => {
-  const [username, setUsername] = useState('JohnDoe');
-  const [email, setEmail] = useState('johndoe@example.com');
-  const [theme, setTheme] = useState('light');
+  const [targetCost, setTargetCost] = useState('');
+  const [targetDate, setTargetDate] = useState('');
+  const userInfo = useGetUserInfo();
 
-  const handleSaveChanges = () => {
-    alert('Changes saved!');
+  useEffect(() => {
+    const fetchTargetData = async () => {
+      if (!userInfo) return;
+
+      const targetsCollectionRef = collection(db, 'targets');
+      const q = query(targetsCollectionRef, where('uid', '==', userInfo));
+      const targetSnapshot = await getDocs(q);
+
+      if (!targetSnapshot.empty) {
+        const targetData = targetSnapshot.docs[0].data();
+        setTargetCost(targetData.targetCost);
+        setTargetDate(targetData.targetDate);
+      }
+    };
+
+    fetchTargetData();
+  }, [userInfo]);
+
+  const handleSaveChanges = async () => {
+    if (!userInfo) return;
+
+    if (!targetCost || !targetDate) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Incomplete Data',
+        text: 'Please fill in both target cost and target date.',
+      });
+      return;
+    }
+
+    const targetsCollectionRef = collection(db, 'targets');
+    const q = query(targetsCollectionRef, where('uid', '==', userInfo));
+    const targetSnapshot = await getDocs(q);
+
+    try {
+      if (targetSnapshot.empty) {
+        // Create new target
+        await addDoc(targetsCollectionRef, {
+          uid: userInfo,
+          targetCost,
+          targetDate
+        });
+      } else {
+        // Update existing target
+        const targetDoc = targetSnapshot.docs[0];
+        await updateDoc(targetDoc.ref, {
+          targetCost,
+          targetDate
+        });
+      }
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Changes Saved',
+        text: 'Your target has been updated successfully.',
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Failed to save changes. Please try again.',
+      });
+    }
   };
 
   return (
@@ -17,34 +83,27 @@ const Settings = () => {
         <h2>Settings</h2>
         <div className="settings-section">
           <label>
-            Username:
+            Target Cost Amount:
             <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              type="number"
+              value={targetCost}
+              onChange={(e) => setTargetCost(e.target.value)}
+              className="form-control"
             />
           </label>
         </div>
         <div className="settings-section">
           <label>
-            Email:
+            Target Date:
             <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type="date"
+              value={targetDate}
+              onChange={(e) => setTargetDate(e.target.value)}
+              className="form-control"
             />
           </label>
         </div>
-        <div className="settings-section">
-          <label>
-            Theme:
-            <select value={theme} onChange={(e) => setTheme(e.target.value)}>
-              <option value="light">Light</option>
-              <option value="dark">Dark</option>
-            </select>
-          </label>
-        </div>
-        <button onClick={handleSaveChanges}>Save Changes</button>
+        <button onClick={handleSaveChanges} className="btn btn-primary">Save Changes</button>
       </div>
     </div>  
   );

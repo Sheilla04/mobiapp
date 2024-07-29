@@ -1,29 +1,50 @@
-/* Signup.css */
 
-body{
+
+.signup-body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
+
 .main-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 70vh; /* Adjust height as needed */
-  padding: 5px;
+  width: 100%;
+  max-width: 1200px;
+  padding: 20px;
   background-color: #c1e3fd;
 }
 
-/* Login container styling */
 .signup-container {
-  width: 400px; /* Adjust width as needed */
-  height: 69vh;
-  background-color: #fff; /* Semi-transparent white background */
+  width: 100%;
+  max-width: 400px;
+  background-color: #fff;
   padding: 20px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Soft shadow */
-  border-radius: 12px; /* Rounded corners */
-  backdrop-filter: blur(10px); /* Apply backdrop filter for blur effect */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.mobile-header {
+  display: none;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.mobile-logo {
+  max-width: 100px;
+  margin-bottom: 10px;
+}
+
+.mobile-title {
+  font-size: 24px;
+  color: #00190e;
 }
 
 .signup-container h2 {
@@ -33,7 +54,6 @@ body{
 
 .input-group {
   margin-bottom: 15px;
-  width: 100%;
 }
 
 .input-group label {
@@ -65,19 +85,15 @@ button:hover {
 }
 
 .image-container {
-  flex-grow: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  margin-left: 10px;
+  padding: 20px;
 }
 
 .image-container img {
-  max-height: 120%;
   max-width: 100%;
-  object-fit: cover;
-  border-radius: 2px;
+  height: auto;
 }
 
 p {
@@ -95,13 +111,21 @@ p a:hover {
   text-decoration: underline;
 }
 
-/* body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-} */
+@media (max-width: 768px) {
+  .main-container {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .signup-container {
+    max-width: 100%;
+  }
+
+  .mobile-header {
+    display: block;
+  }
+
+  .image-container {
+    display: none;
+  }
+}
