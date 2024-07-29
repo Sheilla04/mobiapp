@@ -25,19 +25,6 @@ body {
 }
 
 
-/* .card-header {
-  font-weight: 600;
-  font-size: 20px;
-  background-color: #007bff; 
-  color: white;             
-  padding: 10px 15px;        
-  border-radius: 5px;       
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-} */
 .card-header {
   font-family: 'Oswald', sans-serif; /* Apply the Oswald font */
   font-weight: 600;
@@ -116,6 +103,14 @@ body {
 
 .transactions-overview {
   margin-top: 20px; /* Reduce this value to bring the chart closer to the top */
+}
+
+
+
+
+.card-text {
+  color: white;
+  font-weight: bold;
 }
 
 
