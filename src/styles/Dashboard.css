@@ -24,6 +24,57 @@ body {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
+.dashboard {
+  padding-top: 30px;
+}
+
+.card {
+  margin-bottom: 20px;
+  background-color: #fff;
+  padding: 20px;
+}
+
+.card-blue {
+  background-color: #5dd9ff;
+  color: white;
+}
+
+.card-teal {
+  background-color: teal;
+  color: white;
+}
+
+.card-indigo {
+  background-color: indigo;
+  color: white;
+}
+
+.card-green {
+  background-color: green;
+  color: white;
+}
+
+.card h3 {
+  margin: 0;
+}
+
+.card p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.form-control {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.table {
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
 .card-header {
   font-family: 'Oswald', sans-serif; /* Apply the Oswald font */
   font-weight: 600;

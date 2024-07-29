@@ -4,6 +4,9 @@
   right: 0;
   left: 250px;
   z-index: 1000;
+  right: 0;
+  left: 250px;
+  z-index: 1000;
   background-color: #ffffff;
   padding-left: 100px;
   /* padding: 0.5rem 1rem; */
@@ -31,5 +34,6 @@
   border-radius: 50%;
   object-fit: cover;
 }
+
 
 

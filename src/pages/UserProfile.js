@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
-import { Modal, Form, Button } from 'react-bootstrap';
+import { Modal, Form, Button, InputGroup } from 'react-bootstrap';
 import { auth, db } from '../config/firebase-config';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
@@ -8,6 +7,7 @@ import Swal from 'sweetalert2';
 import { EmailAuthProvider, reauthenticateWithCredential, updatePassword } from 'firebase/auth';
 import '../styles/UserProfile.css';
 import defaultProfilePic from '../assets/defaultProfilePic.jpg'; 
+import { FaEdit, FaKey, FaSignOutAlt } from 'react-icons/fa';
 
 function UserProfile() {
     const [userDetails, setUserDetails] = useState(null);
@@ -15,6 +15,7 @@ function UserProfile() {
     const [formValues, setFormValues] = useState({
         name: '',
         photo: '',
+        email: '',
     });
 
     const fetchUserData = async () => {
@@ -23,8 +24,8 @@ function UserProfile() {
                 const docRef = doc(db, "Users", user.uid);
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
-                    setUserDetails(docSnap.data());
-                    setFormValues(docSnap.data());
+                    setUserDetails({...docSnap.data(), email: user.email});
+                    setFormValues({...docSnap.data(), email: user.email});
                 } else {
                     toast.error("No user data found.");
                 }
@@ -138,24 +139,44 @@ function UserProfile() {
             </div>
             <div className="user-profile">
                 <div className="profile-header">
-                    <img 
-                        src={userDetails.photo || defaultProfilePic} 
-                        alt="Profile" 
-                        className="profile-img" 
-                        style={{ borderRadius: '50%' }}
-                    />
+                    <div className="pic-about">
+                        <img 
+                            src={userDetails.photo || defaultProfilePic} 
+                            alt="Profile" 
+                            className="profile-img" 
+                            style={{ borderRadius: '50%' }}
+                        />
+                        <div className="user-details">
+                            <InputGroup className="mb-3">
+                                <InputGroup.Text>Name</InputGroup.Text>
+                                <Form.Control
+                                    type="text"
+                                    value={userDetails.name}
+                                    readOnly
+                                />
+                            </InputGroup>
+                            <InputGroup className="mb-3">
+                                <InputGroup.Text>Email</InputGroup.Text>
+                                <Form.Control
+                                    type="email"
+                                    value={userDetails.email}
+                                    readOnly
+                                />
+                            </InputGroup>
+                        </div>
+                    </div>
                 </div>
                 <div className="profile-body">
                     <div className="profile-section">
                         <h3>Settings</h3>
-                        <Button variant="primary" onClick={handleShow}>
-                            Edit Profile
+                        <Button variant="primary" onClick={handleShow} className="me-2">
+                            <FaEdit /> Edit
                         </Button>
-                        <Button variant="secondary" onClick={handleChangePassword}>
-                            Change Password
+                        <Button variant="secondary" onClick={handleChangePassword} className="me-2">
+                            <FaKey /> Password
                         </Button>
                         <Button variant="danger" onClick={handleLogout}>
-                            Logout
+                            <FaSignOutAlt /> Logout
                         </Button>
                     </div>
                 </div>
@@ -201,6 +222,3 @@ function UserProfile() {
 }
 
 export default UserProfile;
-
-
-
