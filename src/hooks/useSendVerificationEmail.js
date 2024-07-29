@@ -1,9 +1,9 @@
-// src/SendVerificationEmail.js
-import { auth } from "./firebase";
-import { sendEmailVerification } from "firebase/auth";
-import { useState } from "react";
+// src/hooks/useSendVerificationEmail.js
+import { useState } from 'react';
+import { auth } from '../config/firebase-config';
+import { sendEmailVerification } from 'firebase/auth';
 
-function SendVerificationEmail() {
+const useSendVerificationEmail = () => {
   const [emailSent, setEmailSent] = useState(false);
   const [error, setError] = useState(null);
 
@@ -24,13 +24,7 @@ function SendVerificationEmail() {
     }
   };
 
-  return (
-    <div>
-      <button onClick={sendVerification}>Send Verification Email</button>
-      {emailSent && <p>Verification email sent!</p>}
-      {error && <p>Error: {error}</p>}
-    </div>
-  );
-}
+  return { sendVerification, emailSent, error };
+};
 
-export default SendVerificationEmail;
+export default useSendVerificationEmail;
