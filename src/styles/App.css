@@ -1,43 +1,38 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
-  margin: 0;
-  padding: 0;
 
+
+body {
+  font-family: 'Oswald', sans-serif;
+  background-color: #f0f0f0;
+  box-sizing: border-box;
 }
 
 .app-container {
   display: flex;
-  height: 100%;
   width: 100vw;
-}
-
-.sidebar {
-  
-  color: #fff;
-  width: 250px;
   height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  padding: 20px;
+  overflow: hidden;
 }
 
 .content {
-  margin-left: 250px;
-  padding: 20px;
-  background-color: #f0f0f0;
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.3s ease-in-out;
+  overflow-y: auto;
 }
 
-
-.container-fluid {
-  width: 100%;
-  padding-left: 15px;
-  padding-right: 15px;
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  margin-top: 60px; 
 }
 
-
+@media (min-width: 992px) {
+  .content {
+    margin-left: 250px; 
+    width: calc(100% - 250px);
+  }
+}
 
 
 

@@ -1,9 +1,11 @@
+
 import React, { useState, useEffect } from 'react';
 import { Line, Doughnut, Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebase-config';
 import { useGetUserInfo } from '../hooks/useGetUserInfo';
+import 'chartjs-adapter-date-fns';
 import '../styles/Dashboard.css';
 import { width } from '@fortawesome/free-solid-svg-icons/fa0';
 
@@ -24,6 +26,10 @@ const Dashboard = () => {
         ...doc.data(),
         date: doc.data().date ? doc.data().date.toDate() : null,
       }));
+
+      // Sort transactions by date in ascending order (oldest first)
+      fetchedTransactions.sort((a, b) => a.date - b.date);
+
       setTransactions(fetchedTransactions);
     };
 
@@ -45,12 +51,18 @@ const Dashboard = () => {
       {
         label: 'Amount of costs in Ksh',
         data: transactions.map(t => t.cost),
-        fill: false,
+        fill: true,
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
         borderColor: 'rgba(54, 162, 235, 1)', // Changed to blue
-        borderWidth: 2,
-        tension: 0.1
+        borderWidth: 4,
+        tension: 0.4
       }
     ],
+  };
+
+  const lineOptions = {
+    maintainAspectRatio: false,
+    responsive: true,
   };
 
   // Prepare data for the Doughnut chart
@@ -67,7 +79,12 @@ const Dashboard = () => {
     ],
   };
 
-  // Prepare data for the Bar chart
+  const doughnutOptions = {
+    maintainAspectRatio: false,
+    responsive: true,
+  };
+
+  // Prepare data for the Bar chart with different colors
   const categories = [...new Set(transactions.map(t => t.category))];
   const barData = {
     labels: categories,
@@ -75,61 +92,81 @@ const Dashboard = () => {
       {
         label: 'Total Costs per Category',
         data: categories.map(category => transactions.filter(t => t.category === category).reduce((acc, curr) => acc + (curr.cost || 0), 0)),
-        backgroundColor: 'rgba(75, 192, 192, 0.6)',
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.6)', // Red
+          'rgba(54, 162, 235, 0.6)', // Blue
+          'rgba(75, 192, 192, 0.6)', // Green
+          'rgba(153, 102, 255, 0.6)', // Purple
+          'rgba(255, 159, 64, 0.6)'  // Orange
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 2,
       },
     ],
   };
 
+  const barOptions = {
+    maintainAspectRatio: false,
+    responsive: true,
+  };
+
+  // Filter to show only the last three transactions, sorted by most recent first
+  const recentTransactions = [...transactions].reverse().slice(0, 3);
+
   return (
-    <div className="dashboard container-fluid" style={{paddingTop:'30px'}}>
+    <div className="dashboard container-fluid">
       <div className="row g-3 my-2">
         <div className="col-md-3">
-          <div className="p-3 shadow-sm d-flex justify-content-around align-items-center rounded" style={{backgroundColor:'#5dd9ff'}}>
+          <div className="p-3 shadow-sm d-flex justify-content-around align-items-center rounded card-blue">
             <div>
-              <h3 className="fs-2" style={{color:'white'}}>{totalTransactions}</h3>
-              <p className="fs-5" >Total Transactions</p>
+              <h3 className="fs-2">{totalTransactions}</h3>
+              <p className="fs-5">Total Transactions</p>
             </div>
-            <i className="bi bi-cart-plus p-3 fs-1" style={{color:'white'}}></i>
+            <i className="bi bi-cart-plus p-3 fs-1"></i>
           </div>
         </div>
         <div className="col-md-3">
-          <div className="p-3 shadow-sm d-flex justify-content-around align-items-center rounded" style={{backgroundColor:'teal'}}>
+          <div className="p-3 shadow-sm d-flex justify-content-around align-items-center rounded card-teal">
             <div>
               <h3 className="fs-2">{totalCost.toFixed(2)}</h3>
               <p className="fs-5">Total Cost (Ksh)</p>
             </div>
-            <i className="bi bi-currency-dollar p-3 fs-1" style={{color:'white'}}></i>
+            <i className="bi bi-currency-dollar p-3 fs-1"></i>
           </div>
         </div>
         <div className="col-md-3">
-          <div className="p-3 shadow-sm d-flex justify-content-around align-items-center rounded" style={{backgroundColor:'indigo'}} >
+          <div className="p-3 shadow-sm d-flex justify-content-around align-items-center rounded card-indigo">
             <div>
               <h3 className="fs-2">...</h3>
               <p className="fs-5">...</p>
             </div>
-            <i className="bi bi-receipt p-3 fs-1" style={{color:'white'}}></i>
+            <i className="bi bi-receipt p-3 fs-1"></i>
           </div>
         </div>
         <div className="col-md-3">
-          <div className="p-3 shadow-sm d-flex justify-content-around align-items-center rounded" style={{backgroundColor:'green'}}>
+          <div className="p-3 shadow-sm d-flex justify-content-around align-items-center rounded card-green">
             <div>
               <h3 className="fs-2">...</h3>
               <p className="fs-5">...</p>
             </div>
-            <i className="bi bi-people p-3 fs-1" style={{color:'white'}}></i>
+            <i className="bi bi-people p-3 fs-1"></i>
           </div>
         </div>
       </div>
 
       <div className="row my-5">
         <div className="col-md-12">
-          <div className="card">
+          <div className="card shadow-sm">
             <div className="card-header"><strong>Transactions Overview</strong></div>
             <div className="card-body">
               <div style={{ height: '400px', width: '100%' }}>
-                <Line data={lineData} />
+                <Line data={lineData} options={lineOptions} />
               </div>
             </div>
           </div>
@@ -138,18 +175,22 @@ const Dashboard = () => {
 
       <div className="row my-5">
         <div className="col-md-6">
-          <div className="card">
+          <div className="card shadow-sm">
             <div className="card-header"><strong>Breakdown of Transactions</strong></div>
-            <div className="card-body" style={{height:'25vw', width:'25vw'}}>
-              <Doughnut data={doughnutData} />
+            <div className="card-body">
+              <div style={{ height: '400px', width: '100%' }}>
+                <Doughnut data={doughnutData} options={doughnutOptions} />
+              </div>
             </div>
           </div>
         </div>
         <div className="col-md-6">
-          <div className="card">
-            <div className="card-header" ><strong>Cost Analysis by Category</strong></div>
-            <div className="card-body" style={{height:'25vw', width:'25vw'}}>
-              <Bar data={barData} />
+          <div className="card shadow-sm">
+            <div className="card-header"><strong>Cost Analysis by Category</strong></div>
+            <div className="card-body">
+              <div style={{ height: '400px', width: '100%' }}>
+                <Bar data={barData} options={barOptions} />
+              </div>
             </div>
           </div>
         </div>
@@ -157,7 +198,7 @@ const Dashboard = () => {
 
       <div className="row mt-5">
         <div className="col-12">
-          <div className="card">
+          <div className="card shadow-sm">
             <div className="card-header"><strong>List of Charges</strong></div>
             <div className="card-body">
               <div className="d-flex justify-content-right mb-2">
@@ -178,7 +219,7 @@ const Dashboard = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {transactions.map((transaction, index) => (
+                  {recentTransactions.map((transaction, index) => (
                     <tr key={index}>
                       <td>{transaction.amount}</td>
                       <td>{transaction.transactionType}</td>
@@ -196,11 +237,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-
-
-
-
-
-
-

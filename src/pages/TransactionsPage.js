@@ -1,5 +1,5 @@
+
 import React, { useState, useEffect } from 'react';
-import UploadPDF from '../UploadFile';
 import { useAddTransaction } from '../hooks/useAddTransaction';
 import useEditTransaction from '../hooks/useEditTransaction';
 import { useDeleteTransaction } from '../hooks/useDeleteTransaction';
@@ -48,6 +48,10 @@ const TransactionsPage = () => {
         ...doc.data(),
         date: doc.data().date ? doc.data().date.toDate() : null,
       }));
+
+      
+      fetchedTransactions.sort((a, b) => a.date - b.date);
+
       setTransactions(fetchedTransactions);
     };
 
@@ -121,7 +125,9 @@ const TransactionsPage = () => {
     try {
       const timestamp = Timestamp.fromDate(new Date());
       await addTransaction(userInfo, { ...formData, date: timestamp, cost });
-      setTransactions([...transactions, { ...formData, date: new Date(), cost }]);
+      const newTransaction = { ...formData, date: new Date(), cost };
+      const updatedTransactions = [...transactions, newTransaction].sort((a, b) => a.date - b.date);
+      setTransactions(updatedTransactions);
       setFormData({
         amount: '',
         transactionType: '',
@@ -192,7 +198,7 @@ const TransactionsPage = () => {
       await updateDoc(transactionDocRef, restData);
       const updatedTransactions = transactions.map(transaction =>
         transaction.id === id ? { ...transaction, ...restData } : transaction
-      );
+      ).sort((a, b) => a.date - b.date);
       setTransactions(updatedTransactions);
       handleClose();
       Swal.fire({
@@ -228,10 +234,10 @@ const TransactionsPage = () => {
   };
 
   return (
-    <div style={{paddingTop:'70px'}}>
+    <div style={{ paddingTop: '70px' }}>
       <div className="transactions-page">
         <h2>Transactions</h2>
-        
+
         <div className="controls">
           <input
             type="text"
@@ -239,8 +245,13 @@ const TransactionsPage = () => {
             value={searchTerm}
             onChange={handleSearchChange}
           />
+          <Button variant="primary" onClick={handleShow} className="add-transaction-btn">
+          Add Transaction
+        </Button>
         </div>
+        <div className="table-responsive">
         <table>
+          
           <thead>
             <tr>
               <th>Date</th>
@@ -258,7 +269,7 @@ const TransactionsPage = () => {
                 <td>{transaction.amount}</td>
                 <td>{transaction.transactionType}</td>
                 <td>{transaction.category}</td>
-                <td>{transaction.cost}</td>
+                <td>{(transaction.cost || 0).toFixed(2)}</td>
                 <td>
                   <FontAwesomeIcon
                     icon={faEdit}
@@ -275,75 +286,73 @@ const TransactionsPage = () => {
             ))}
           </tbody>
         </table>
-        <div className="button-group" style={{margin:'5px'}}>
-          <button onClick={handleShow}>Add Transaction</button>
         </div>
-        <UploadPDF />
 
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>{editData ? 'Edit Transaction' : 'Add Transaction'}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Form.Group>
-                <Form.Label>Amount</Form.Label>
-                <Form.Control
-                  type="number"
-                  name="amount"
-                  value={editData ? editData.amount : formData.amount}
-                  onChange={handleFormChange}
-                />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Transaction Type</Form.Label>
-                <Form.Control
-                  as="select"
-                  name="transactionType"
-                  value={editData ? editData.transactionType : formData.transactionType}
-                  onChange={handleFormChange}
-                >
-                  <option value="">Select Type</option>
-                  {Object.keys(transactionOptions).map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </Form.Control>
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Category</Form.Label>
-                <Form.Control
-                  as="select"
-                  name="category"
-                  value={editData ? editData.category : formData.category}
-                  onChange={handleFormChange}
-                >
-                  <option value="">Select Category</option>
-                  {(transactionOptions[editData ? editData.transactionType : formData.transactionType] || []).map(
-                    (option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    )
-                  )}
-                </Form.Control>
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-            <Button
-              variant="primary"
-              onClick={editData ? () => handleUpdateTransaction(editData) : handleAddTransaction}
-            >
-              {editData ? 'Update Transaction' : 'Add Transaction'}
-            </Button>
-          </Modal.Footer>
-        </Modal>
+        
+
+        
       </div>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>{editData ? 'Edit Transaction' : 'Add Transaction'}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="amount">
+              <Form.Label>Amount</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Enter amount"
+                name="amount"
+                value={editData ? editData.amount : formData.amount}
+                onChange={handleFormChange}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="transactionType">
+              <Form.Label>Transaction Type</Form.Label>
+              <Form.Control
+                as="select"
+                name="transactionType"
+                value={editData ? editData.transactionType : formData.transactionType}
+                onChange={handleFormChange}
+              >
+                <option value="">Select a type</option>
+                {Object.keys(transactionOptions).map((type) => (
+                  <option key={type} value={type}>{type}</option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+
+            <Form.Group controlId="category">
+              <Form.Label>Category</Form.Label>
+              <Form.Control
+                as="select"
+                name="category"
+                value={editData ? editData.category : formData.category}
+                onChange={handleFormChange}
+              >
+                <option value="">Select a category</option>
+                {(transactionOptions[editData ? editData.transactionType : formData.transactionType] || []).map((category) => (
+                  <option key={category} value={category}>{category}</option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button
+            variant="primary"
+            onClick={editData ? () => handleUpdateTransaction(editData) : handleAddTransaction}
+          >
+            {editData ? 'Save Changes' : 'Add Transaction'}
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
@@ -459,7 +468,6 @@ const withdrawalCostTable = {
 };
 
 export default TransactionsPage;
-
 
 
 
