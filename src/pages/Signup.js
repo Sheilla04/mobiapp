@@ -1,13 +1,14 @@
-// src/Signup.js
+
+
+
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Signup.css';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth, db } from '../config/firebase-config';
 import { doc, setDoc } from 'firebase/firestore';
-import { toast, ToastContainer } from 'react-toastify'; // Import ToastContainer
-import 'react-toastify/dist/ReactToastify.css'; // Import CSS for toast notifications
-// import SignInwithGoogle from './SignInwithGoogle';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Signup() {
   const [name, setName] = useState("");
@@ -34,9 +35,13 @@ function Signup() {
   };
 
   return (
-    <div className='signUp-body'>
+    <div className='signup-body'>
       <div className="main-container">
         <div className="signup-container">
+          <div className="mobile-header">
+            <img src="/logo-no-background.png" alt="MobiBudget Logo" className="mobile-logo" />
+            <h1 className="mobile-title">MobiBudget</h1>
+          </div>
           <h2>Sign Up</h2>
           <form onSubmit={handleSubmit}>
             <div className="input-group">
@@ -72,10 +77,10 @@ function Signup() {
             <button type="submit">Sign Up</button>
           </form>
           <p>Already have an account? <Link to="/login">Login</Link></p>
-          <ToastContainer /> {/* Add ToastContainer */}
+          <ToastContainer />
         </div>
         <div className="image-container">
-          <img src="/logo-no-background.png" alt="Signup" />
+          <img src="/logo-no-background.png" alt="MobiBudget" />
         </div>
       </div>
     </div>  

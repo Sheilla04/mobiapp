@@ -1,6 +1,5 @@
 
 
-/* App.css */
 body {
   font-family: 'Oswald', sans-serif;
   background-color: #f0f0f0;
@@ -27,12 +26,15 @@ body {
 .main-content {
   flex-grow: 1;
   padding: 20px;
-  margin-top: 60px; /* Match navbar height */
+  margin-top: 60px; 
 }
 
 @media (min-width: 992px) {
   .content {
-    margin-left: 250px; /* Match sidebar width */
+    margin-left: 250px; 
     width: calc(100% - 250px);
   }
 }
+
+
+

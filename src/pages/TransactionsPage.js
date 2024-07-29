@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect } from 'react';
-import UploadPDF from '../UploadFile';
 import { useAddTransaction } from '../hooks/useAddTransaction';
 import useEditTransaction from '../hooks/useEditTransaction';
 import { useDeleteTransaction } from '../hooks/useDeleteTransaction';
@@ -246,8 +245,13 @@ const TransactionsPage = () => {
             value={searchTerm}
             onChange={handleSearchChange}
           />
+          <Button variant="primary" onClick={handleShow} className="add-transaction-btn">
+          Add Transaction
+        </Button>
         </div>
+        <div className="table-responsive">
         <table>
+          
           <thead>
             <tr>
               <th>Date</th>
@@ -282,12 +286,11 @@ const TransactionsPage = () => {
             ))}
           </tbody>
         </table>
+        </div>
 
-        <Button variant="primary" onClick={handleShow}>
-          Add Transaction
-        </Button>
+        
 
-        <UploadPDF transactions={transactions} />
+        
       </div>
 
       <Modal show={show} onHide={handleClose}>

@@ -1,30 +1,27 @@
 
 
-/* navbar.css */
+
 .navbar {
   position: fixed;
   top: 0;
   right: 0;
-  left: 0;
+  left: 250px;
   z-index: 1000;
   background-color: #ffffff;
   padding: 0.5rem 1rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  height: 60px; 
+  height: 60px;
 }
 
 .navbar-toggler {
   display: none;
 }
 
-@media (min-width: 992px) {
-  .navbar {
-    left: 250px; /* Match sidebar width */
-    width: calc(100% - 250px);
-  }
-}
-
 @media (max-width: 991px) {
+  .navbar {
+    left: 0;
+  }
+
   .navbar-toggler {
     display: block;
   }
@@ -36,3 +33,5 @@
   border-radius: 50%;
   object-fit: cover;
 }
+
+

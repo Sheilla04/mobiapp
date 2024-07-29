@@ -1,7 +1,5 @@
 
 
-
-// TopNavBar.js
 import React, { useState, useEffect } from "react";
 import 'bootstrap/js/dist/dropdown';
 import { onAuthStateChanged } from "firebase/auth";
