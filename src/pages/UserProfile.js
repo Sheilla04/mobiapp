@@ -1,3 +1,6 @@
+
+// export default UserProfile;
+
 import React, { useState, useEffect } from 'react';
 import { Modal, Form, Button, InputGroup } from 'react-bootstrap';
 import { auth, db } from '../config/firebase-config';
@@ -133,51 +136,44 @@ function UserProfile() {
     }
 
     return (
-        <div style={{paddingTop: '35px'}}>
-            <div className="profile-info">
-                <h1>Hi, {userDetails.name}</h1>
-            </div>
+        <div className="user-profile-container">
             <div className="user-profile">
                 <div className="profile-header">
                     <div className="pic-about">
                         <img 
                             src={userDetails.photo || defaultProfilePic} 
                             alt="Profile" 
-                            className="profile-img" 
-                            style={{ borderRadius: '50%' }}
+                            className="profile-img"
                         />
                         <div className="user-details">
-                            <InputGroup className="mb-3">
-                                <InputGroup.Text>Name</InputGroup.Text>
-                                <Form.Control
-                                    type="text"
-                                    value={userDetails.name}
-                                    readOnly
-                                />
-                            </InputGroup>
-                            <InputGroup className="mb-3">
-                                <InputGroup.Text>Email</InputGroup.Text>
-                                <Form.Control
-                                    type="email"
-                                    value={userDetails.email}
-                                    readOnly
-                                />
-                            </InputGroup>
+                            <h1>Hi, {userDetails.name}</h1>
+                            <div className="email-container">
+                                <InputGroup className="mb-3">
+                                    <InputGroup.Text>Email</InputGroup.Text>
+                                    <Form.Control
+                                        type="email"
+                                        value={userDetails.email}
+                                        readOnly
+                                    />
+                                </InputGroup>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div className="profile-body">
                     <div className="profile-section">
                         <h3>Settings</h3>
-                        <Button variant="primary" onClick={handleShow} className="me-2">
-                            <FaEdit /> Edit
-                        </Button>
-                        <Button variant="secondary" onClick={handleChangePassword} className="me-2">
-                            <FaKey /> Password
-                        </Button>
-                        <Button variant="danger" onClick={handleLogout}>
-                            <FaSignOutAlt /> Logout
-                        </Button>
+                        <div className="profile-actions">
+                            <Button variant="primary" onClick={handleShow} className="profile-button">
+                                <FaEdit /> Edit Profile
+                            </Button>
+                            <Button variant="secondary" onClick={handleChangePassword} className="profile-button">
+                                <FaKey /> Change Password
+                            </Button>
+                            <Button variant="danger" onClick={handleLogout} className="profile-button">
+                                <FaSignOutAlt /> Logout
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </div>

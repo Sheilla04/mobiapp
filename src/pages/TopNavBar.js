@@ -94,7 +94,7 @@ function TopNavBar({ toggleSidebar }) {
 
   return (
     <nav className="navbar navbar-expand-sm fixed-top" style={{
-      marginLeft:'16.4vw',
+      marginLeft:'250px',
       padding:'30px',
       paddingBottom:'30px',
     }}>
